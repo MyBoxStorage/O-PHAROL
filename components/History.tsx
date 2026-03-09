@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import LighthouseSVG from './ui/LighthouseSVG'
+import LogoPharol from './ui/LogoPharol'
 import { timeline } from '@/lib/timelineData'
 
 export default function History() {
@@ -13,7 +13,7 @@ export default function History() {
 
       {/* Background farol */}
       <div style={{ position: 'absolute', right: -80, top: '50%', transform: 'translateY(-50%)', opacity: 0.04, pointerEvents: 'none' }}>
-        <LighthouseSVG size={380} variant="decoration" />
+        <LogoPharol variant="full" size={340} color="#1B2B6B" />
       </div>
 
       {/* Background radial glow */}
