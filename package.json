@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_ENV=development next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,6 +19,7 @@
     "@types/react": "18.3.28",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.27",
+    "cross-env": "^10.1.0",
     "typescript": "5.9.3"
   }
 }
