@@ -76,7 +76,7 @@ export default function Menu() {
   }
 
   return (
-    <section id="menu" className="section" style={{ background: 'var(--cream)' }}>
+    <section id="menu" className="section" style={{ background: 'var(--white)' }}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">Nossa Gastronomia</span>

@@ -6,18 +6,15 @@ import { timeline } from '@/lib/timelineData'
 
 export default function History() {
   return (
-    <section id="history" className="section" style={{ background: 'var(--navy-deep)', position: 'relative', overflow: 'hidden' }}>
+    <section id="history" className="section" style={{ background: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
       {/* top / bottom gold lines */}
-      <div style={{ position: 'absolute', insetInline: 0, top: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent)' }} />
-      <div style={{ position: 'absolute', insetInline: 0, bottom: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent)' }} />
+      <div style={{ position: 'absolute', insetInline: 0, top: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)' }} />
+      <div style={{ position: 'absolute', insetInline: 0, bottom: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)' }} />
 
-      {/* Background farol */}
-      <div style={{ position: 'absolute', right: -80, top: '50%', transform: 'translateY(-50%)', opacity: 0.04, pointerEvents: 'none' }}>
+      {/* Background farol — subtil em navy sobre cream */}
+      <div style={{ position: 'absolute', right: -80, top: '50%', transform: 'translateY(-50%)', opacity: 0.045, pointerEvents: 'none' }}>
         <LogoPharol variant="full" size={340} />
       </div>
-
-      {/* Background radial glow */}
-      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', width: '60%', height: '60%', background: 'radial-gradient(ellipse, rgba(27,43,107,0.4) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
       <div className="container" style={{ maxWidth: 860, position: 'relative', zIndex: 1 }}>
         {/* Header */}
@@ -29,8 +26,8 @@ export default function History() {
           transition={{ duration: 0.8 }}
           style={{ marginBottom: 80 }}
         >
-          <span className="section-label" style={{ color: 'rgba(201,168,76,0.65)' }}>Nossa Trajetória</span>
-          <h2 className="section-title" style={{ color: 'var(--white)' }}>
+          <span className="section-label">Nossa Trajetória</span>
+          <h2 className="section-title" style={{ color: 'var(--navy)' }}>
             Uma história de{' '}
             <em style={{ color: 'var(--gold)' }}>excelência</em>
           </h2>
@@ -42,11 +39,8 @@ export default function History() {
           <div
             style={{
               position: 'absolute',
-              left: 18,
-              top: 8,
-              bottom: 8,
-              width: 1,
-              background: 'linear-gradient(to bottom, transparent, rgba(201,168,76,0.5) 8%, rgba(201,168,76,0.5) 92%, transparent)',
+              left: 18, top: 8, bottom: 8, width: 1,
+              background: 'linear-gradient(to bottom, transparent, rgba(27,43,107,0.25) 8%, rgba(201,168,76,0.4) 92%, transparent)',
             }}
           />
 
@@ -64,15 +58,11 @@ export default function History() {
                 {/* Diamond dot */}
                 <div
                   style={{
-                    position: 'absolute',
-                    left: -39,
-                    top: 8,
-                    width: 16,
-                    height: 16,
-                    transform: 'rotate(45deg)',
-                    background: 'var(--navy-deep)',
+                    position: 'absolute', left: -39, top: 8,
+                    width: 16, height: 16, transform: 'rotate(45deg)',
+                    background: 'var(--cream)',
                     border: '2px solid var(--gold)',
-                    boxShadow: '0 0 12px rgba(201,168,76,0.3)',
+                    boxShadow: '0 0 10px rgba(201,168,76,0.2)',
                   }}
                 />
                 <h3
@@ -137,7 +127,7 @@ export default function History() {
                     style={{
                       fontFamily: 'var(--font-cormorant), serif',
                       fontSize: '1.08rem',
-                      color: 'rgba(255,255,255,0.68)',
+                      color: 'var(--text-mid)',
                       lineHeight: 1.7,
                     }}
                   >

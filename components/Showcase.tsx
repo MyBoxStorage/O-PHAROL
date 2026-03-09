@@ -23,7 +23,7 @@ export default function Showcase() {
   }
 
   return (
-    <section id="showcase" className="section" style={{ background: 'var(--navy-deep)', paddingBottom: 60, overflow: 'hidden' }}>
+    <section id="showcase" className="section" style={{ background: 'var(--cream)', paddingBottom: 60, overflow: 'hidden' }}>
       {/* Header */}
       <motion.div
         className="container"
@@ -34,8 +34,8 @@ export default function Showcase() {
         style={{ marginBottom: 48 }}
       >
         <div className="section-header" style={{ marginBottom: 0 }}>
-          <span className="section-label" style={{ color: 'rgba(201,168,76,0.65)' }}>Experiências</span>
-          <h2 className="section-title" style={{ color: 'var(--white)' }}>
+          <span className="section-label">Experiências</span>
+          <h2 className="section-title" style={{ color: 'var(--navy)' }}>
             Cada momento,{' '}
             <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>uma memória</em>
           </h2>
@@ -198,15 +198,15 @@ export default function Showcase() {
           <motion.span
             animate={{ opacity: hintVisible ? [0.4, 0.9, 0.4] : 0 }}
             transition={{ duration: 2.5, repeat: Infinity }}
-            style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.56rem', letterSpacing: '0.25em', textTransform: 'uppercase' }}
+            style={{ color: 'var(--text-light)', fontSize: '0.56rem', letterSpacing: '0.25em', textTransform: 'uppercase' }}
           >
             Arraste para explorar →
           </motion.span>
-          <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.56rem', letterSpacing: '0.2em' }}>
+          <span style={{ color: 'var(--text-light)', fontSize: '0.56rem', letterSpacing: '0.2em' }}>
             {items.length} experiências
           </span>
         </div>
-        <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', borderRadius: 1 }}>
+        <div style={{ height: 1, background: 'rgba(27,43,107,0.1)', borderRadius: 1 }}>
           <motion.div
             style={{ height: '100%', background: 'linear-gradient(90deg, var(--gold-dark), var(--gold))', borderRadius: 1 }}
             animate={{ width: `${Math.max(progress, 4)}%` }}

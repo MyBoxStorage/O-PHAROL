@@ -145,8 +145,8 @@ input, select, textarea, button { font-family: inherit; outline: none; }
 
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--navy-deep); }
-::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 2px; opacity: 0.4; }
 
 #showcase *::-webkit-scrollbar { display: none; }
 #showcase * { scrollbar-width: none; }

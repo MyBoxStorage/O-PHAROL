@@ -37,7 +37,7 @@ const contacts = [
 
 export default function Location() {
   return (
-    <section id="location" className="section" style={{ background: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
+    <section id="location" className="section" style={{ background: 'var(--white)', position: 'relative', overflow: 'hidden' }}>
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
 

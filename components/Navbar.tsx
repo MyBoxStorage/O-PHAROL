@@ -57,16 +57,17 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '0 52px',
-          background: scrolled ? 'rgba(6, 11, 32, 0.94)' : 'transparent',
+          background: scrolled ? 'rgba(255,255,255,0.97)' : 'transparent',
           backdropFilter: scrolled ? 'blur(28px) saturate(160%)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(201,168,76,0.13)' : '1px solid transparent',
+          borderBottom: scrolled ? '1px solid rgba(27,43,107,0.08)' : '1px solid transparent',
+          boxShadow: scrolled ? '0 2px 32px rgba(27,43,107,0.06)' : 'none',
           transition: 'background 600ms ease, border-color 600ms ease, backdrop-filter 600ms ease',
         }}
       >
         {/* ── Logo ── */}
         <a href="#hero" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
           <motion.div whileHover={{ scale: 1.04 }} transition={{ type: 'spring', stiffness: 240, damping: 20 }}>
-            <LogoPharol variant="navbar" size={200} onDark />
+            <LogoPharol variant="navbar" size={200} onDark={!scrolled} />
           </motion.div>
         </a>
 
@@ -87,7 +88,7 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
                     textTransform: 'uppercase',
                     letterSpacing: '0.16em',
                     fontWeight: 600,
-                    color: active ? 'var(--gold)' : isHov ? '#fff' : 'rgba(255,255,255,0.72)',
+                    color: active ? 'var(--gold)' : isHov ? (scrolled ? 'var(--navy)' : '#fff') : scrolled ? 'var(--text-mid)' : 'rgba(255,255,255,0.72)',
                     transition: 'color 0.25s',
                     paddingBottom: 2,
                     display: 'block',
@@ -145,13 +146,13 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
 
           {/* Minha Área */}
           <button onClick={onClientArea} style={{
-            background: 'transparent', border: '1px solid rgba(255,255,255,0.18)',
-            color: 'rgba(255,255,255,0.52)', fontSize: '0.58rem', letterSpacing: '0.13em',
+            background: 'transparent', border: `1px solid ${scrolled ? 'rgba(27,43,107,0.25)' : 'rgba(255,255,255,0.18)'}`,
+            color: scrolled ? 'var(--text-mid)' : 'rgba(255,255,255,0.52)', fontSize: '0.58rem', letterSpacing: '0.13em',
             textTransform: 'uppercase', padding: '10px 14px', cursor: 'pointer',
             transition: 'all 0.25s', fontFamily: 'var(--font-montserrat), sans-serif',
           }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.color = 'rgba(255,255,255,0.82)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = 'rgba(255,255,255,0.52)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = scrolled ? 'var(--navy)' : 'rgba(255,255,255,0.4)'; e.currentTarget.style.color = scrolled ? 'var(--navy)' : 'rgba(255,255,255,0.82)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = scrolled ? 'rgba(27,43,107,0.25)' : 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = scrolled ? 'var(--text-mid)' : 'rgba(255,255,255,0.52)' }}
           >
             Minha Área
           </button>
@@ -162,9 +163,9 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
           style={{ background: 'transparent', border: 'none', padding: 4, cursor: 'pointer' }}
           aria-label="Abrir menu"
         >
-          <motion.div animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }} style={{ width: 22, height: 1.5, background: 'white', marginBottom: 6 }} />
-          <motion.div animate={open ? { opacity: 0 } : { opacity: 1 }} style={{ width: 16, height: 1.5, background: 'white', marginBottom: 6 }} />
-          <motion.div animate={open ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }} style={{ width: 22, height: 1.5, background: 'white' }} />
+          <motion.div animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }} style={{ width: 22, height: 1.5, background: scrolled ? 'var(--navy)' : 'white', marginBottom: 6 }} />
+          <motion.div animate={open ? { opacity: 0 } : { opacity: 1 }} style={{ width: 16, height: 1.5, background: scrolled ? 'var(--navy)' : 'white', marginBottom: 6 }} />
+          <motion.div animate={open ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }} style={{ width: 22, height: 1.5, background: scrolled ? 'var(--navy)' : 'white' }} />
         </button>
       </motion.nav>
 

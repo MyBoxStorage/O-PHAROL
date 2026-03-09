@@ -44,9 +44,9 @@ const features = [
 
 export default function About() {
   return (
-    <section id="about" className="section" style={{ background: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
-      {/* Crosshatch background */}
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.016, backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v32H0zM8 0h1v32H8zM16 0h1v32H16zM24 0h1v32H24zM0 0v1h32V0zM0 8v1h32V8zM0 16v1h32V16zM0 24v1h32V24z' fill='%231B2B6B'/%3E%3C/svg%3E\")", pointerEvents: 'none' }} />
+    <section id="about" className="section" style={{ background: 'var(--white)', position: 'relative', overflow: 'hidden' }}>
+      {/* Subtle dot pattern */}
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.022, backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='%231B2B6B'/%3E%3C/svg%3E\")", pointerEvents: 'none' }} />
 
       <div className="container about-grid" style={{ position: 'relative', zIndex: 1 }}>
 

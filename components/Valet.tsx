@@ -39,7 +39,7 @@ export default function Valet() {
   return (
     <section
       style={{
-        background: 'var(--navy-mid)',
+        background: 'var(--cream-dark)',
         position: 'relative',
         overflow: 'hidden',
         padding: '0',
@@ -48,7 +48,7 @@ export default function Valet() {
       {/* Decorative diagonal overlay */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 50%, rgba(201,168,76,0.02) 100%)',
+        background: 'linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 50%, rgba(27,43,107,0.03) 100%)',
         pointerEvents: 'none',
       }} />
 
@@ -59,7 +59,7 @@ export default function Valet() {
           gap: 48,
           alignItems: 'center',
           padding: '48px 0',
-          borderBottom: '1px solid rgba(201,168,76,0.1)',
+          borderBottom: '1px solid rgba(27,43,107,0.1)',
         }}>
 
           {/* Left: texto */}
@@ -80,12 +80,12 @@ export default function Valet() {
                 <CarIcon />
               </div>
               <div>
-                <div style={{ fontSize: '0.55rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(201,168,76,0.65)', fontFamily: 'var(--font-montserrat), sans-serif', marginBottom: 3 }}>Conveniência Premium</div>
-                <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.45rem', color: 'var(--white)', lineHeight: 1.1 }}>Valet Parking <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>disponível</em></div>
+                <div style={{ fontSize: '0.55rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold-dark)', fontFamily: 'var(--font-montserrat), sans-serif', marginBottom: 3 }}>Conveniência Premium</div>
+                <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.45rem', color: 'var(--navy)', lineHeight: 1.1 }}>Valet Parking <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>disponível</em></div>
               </div>
             </div>
 
-            <p style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.08rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.55)', lineHeight: 1.65, margin: '0 0 20px', maxWidth: 480 }}>
+            <p style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.08rem', fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: 1.65, margin: '0 0 20px', maxWidth: 480 }}>
               Chegue com tranquilidade. Nossa equipe cuida do seu veículo enquanto você aprecia cada momento da experiência O Pharol.
             </p>
 
@@ -97,7 +97,7 @@ export default function Valet() {
               ].map(({ Icon, label }) => (
                 <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: 'var(--gold)', opacity: 0.8 }}><Icon /></span>
-                  <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-montserrat), sans-serif' }}>{label}</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-mid)', fontFamily: 'var(--font-montserrat), sans-serif' }}>{label}</span>
                 </div>
               ))}
             </div>
@@ -123,10 +123,10 @@ export default function Valet() {
                 <div key={i} style={{ position: 'absolute', width: 10, height: 10, border: '1px solid var(--gold)', opacity: 0.4, ...pos }} />
               ))}
 
-              <div style={{ fontFamily: 'var(--font-great-vibes), cursive', fontSize: '3.2rem', color: 'var(--gold)', lineHeight: 1, marginBottom: 4 }}>Valet</div>
-              <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.5rem', letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 14 }}>Serviço Exclusivo</div>
-              <div style={{ width: 40, height: 1, background: 'rgba(201,168,76,0.3)', margin: '0 auto 14px' }} />
-              <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.08em' }}>Av. Atlântica, 2554</div>
+              <div style={{ fontFamily: 'var(--font-great-vibes), cursive', fontSize: '3.2rem', color: 'var(--navy)', lineHeight: 1, marginBottom: 4 }}>Valet</div>
+              <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.5rem', letterSpacing: '0.4em', textTransform: 'uppercase', color: 'var(--text-light)', marginBottom: 14 }}>Serviço Exclusivo</div>
+              <div style={{ width: 40, height: 1, background: 'rgba(201,168,76,0.5)', margin: '0 auto 14px' }} />
+              <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.62rem', color: 'var(--text-mid)', letterSpacing: '0.08em' }}>Av. Atlântica, 2554</div>
             </div>
           </motion.div>
 
