@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import LighthouseSVG from './ui/LighthouseSVG'
+import LogoPharol from './ui/LogoPharol'
 
 type FooterProps = {
   onReserve: () => void
@@ -54,11 +54,7 @@ export default function Footer({ onReserve, onQueue, onClientArea, onAdmin }: Fo
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 18 }}>
-              <LighthouseSVG size={36} variant="mini" />
-              <div>
-                <div style={{ fontFamily: 'var(--font-playfair), serif', letterSpacing: '0.18em', color: 'white', fontSize: '0.95rem' }}>O PHAROL</div>
-                <div style={{ fontFamily: 'var(--font-great-vibes), cursive', color: 'var(--gold)', fontSize: '0.9rem' }}>Restaurante Gourmet</div>
-              </div>
+              <LogoPharol variant="navbar" size={180} color="white" />
             </div>
             <p style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.02rem', lineHeight: 1.75, color: 'rgba(255,255,255,0.45)', maxWidth: 260 }}>
               Excelência gastronômica na Avenida Atlântica de Balneário Camboriú desde 1986. Um farol que guia aos melhores sabores do mar.

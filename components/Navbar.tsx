@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import LighthouseSVG from './ui/LighthouseSVG'
+import LogoPharol from './ui/LogoPharol'
+// LighthouseSVG mantido apenas se usado em outro lugar
 
 type NavbarProps = {
   onReserve: () => void
@@ -63,14 +64,10 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
         }}
       >
         {/* ── Logo ── */}
-        <a href="#hero" style={{ display: 'flex', alignItems: 'center', gap: 13, textDecoration: 'none', flexShrink: 0 }}>
-          <motion.div whileHover={{ scale: 1.06, rotate: -2 }} transition={{ type: 'spring', stiffness: 260, damping: 18 }}>
-            <LighthouseSVG size={40} showBeam={scrolled} variant="mini" />
+        <a href="#hero" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
+          <motion.div whileHover={{ scale: 1.04 }} transition={{ type: 'spring', stiffness: 240, damping: 20 }}>
+            <LogoPharol variant="navbar" size={200} color="white" />
           </motion.div>
-          <div>
-            <div style={{ fontFamily: 'var(--font-playfair), serif', color: '#fff', fontSize: '0.98rem', letterSpacing: '0.22em', fontWeight: 700, lineHeight: 1 }}>O PHAROL</div>
-            <div style={{ fontFamily: 'var(--font-great-vibes), cursive', color: 'var(--gold)', fontSize: '0.85rem', letterSpacing: '0.04em', lineHeight: 1.3 }}>Gourmet</div>
-          </div>
         </a>
 
         {/* ── Desktop links ── */}
