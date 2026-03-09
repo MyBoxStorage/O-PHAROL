@@ -54,7 +54,7 @@ export default function Footer({ onReserve, onQueue, onClientArea, onAdmin }: Fo
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 18 }}>
-              <LogoPharol variant="navbar" size={180} color="white" goldAccent />
+              <LogoPharol variant="navbar" size={180} onDark />
             </div>
             <p style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.02rem', lineHeight: 1.75, color: 'rgba(255,255,255,0.45)', maxWidth: 260 }}>
               Excelência gastronômica na Avenida Atlântica de Balneário Camboriú desde 1986. Um farol que guia aos melhores sabores do mar.

@@ -66,7 +66,7 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
         {/* ── Logo ── */}
         <a href="#hero" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
           <motion.div whileHover={{ scale: 1.04 }} transition={{ type: 'spring', stiffness: 240, damping: 20 }}>
-            <LogoPharol variant="navbar" size={200} color="white" goldAccent />
+            <LogoPharol variant="navbar" size={200} onDark />
           </motion.div>
         </a>
 
