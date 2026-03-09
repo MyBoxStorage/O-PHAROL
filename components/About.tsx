@@ -2,191 +2,176 @@
 
 import { motion } from 'framer-motion'
 
+/* ── Ícones SVG temáticos ── */
+const LobsterIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+    <path d="M12 3C8 3 5 6 5 10c0 3 2 5.5 5 6.5V20h4v-3.5c3-1 5-3.5 5-6.5 0-4-3-7-7-7z" />
+    <path d="M9 6c-2-1-4 0-4 2" />
+    <path d="M15 6c2-1 4 0 4 2" />
+    <path d="M7 15c-2 1-3 3-2 5" />
+    <path d="M17 15c2 1 3 3 2 5" />
+  </svg>
+)
+
+const WaveIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+    <path d="M2 12c1.5-3 3-4.5 6-4.5S11.5 9 15 9s4.5-1.5 6-4.5" />
+    <path d="M2 18c1.5-3 3-4.5 6-4.5S11.5 15 15 15s4.5-1.5 6-4.5" />
+  </svg>
+)
+
+const MusicIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+    <path d="M9 18V5l12-2v13" />
+    <circle cx="6" cy="18" r="3" />
+    <circle cx="18" cy="16" r="3" />
+  </svg>
+)
+
+const AwardIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+    <circle cx="12" cy="8" r="6" />
+    <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+  </svg>
+)
+
 const features = [
-  { icon: '🦞', label: 'Frutos do Mar', desc: 'Ingredientes frescos, selecionados diariamente' },
-  { icon: '🌊', label: 'Vista para o Mar', desc: 'Varanda privilegiada na Av. Atlântica' },
-  { icon: '🎵', label: 'Música ao Vivo', desc: 'Ambiente sofisticado e acolhedor' },
-  { icon: '🏆', label: "Travellers' Choice", desc: 'Top 10% Tripadvisor — +1.400 avaliações' },
+  { Icon: LobsterIcon, label: 'Frutos do Mar', desc: 'Ingredientes frescos, selecionados diariamente' },
+  { Icon: WaveIcon,    label: 'Vista para o Mar', desc: 'Varanda privilegiada na Av. Atlântica' },
+  { Icon: MusicIcon,   label: 'Música ao Vivo', desc: 'Ambiente sofisticado e acolhedor' },
+  { Icon: AwardIcon,   label: "Travellers' Choice", desc: 'Top 10% Tripadvisor — +1.400 avaliações' },
 ]
 
 export default function About() {
   return (
     <section id="about" className="section" style={{ background: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
-      {/* Texture overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0.018,
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231B2B6B' fill-opacity='1'%3E%3Cpath d='M20 20.5V18H0v5h20v20.5h5V23h20v-5H25V2.5h-5z'/%3E%3C/g%3E%3C/svg%3E\")",
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Crosshatch background */}
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.016, backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v32H0zM8 0h1v32H8zM16 0h1v32H16zM24 0h1v32H24zM0 0v1h32V0zM0 8v1h32V8zM0 16v1h32V16zM0 24v1h32V24z' fill='%231B2B6B'/%3E%3C/svg%3E\")", pointerEvents: 'none' }} />
 
       <div className="container about-grid" style={{ position: 'relative', zIndex: 1 }}>
-        {/* Video Column */}
-        <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ position: 'relative' }}
-          className="about-video-wrap"
-        >
-          {/* Decorative offset frame */}
-          <div style={{ position: 'absolute', top: -16, left: -16, right: 16, bottom: -16, border: '1px solid rgba(201,168,76,0.25)', pointerEvents: 'none', zIndex: 0 }} />
 
-          <div style={{ position: 'relative', aspectRatio: '3 / 4', overflow: 'hidden', boxShadow: '-12px 24px 80px rgba(13,24,56,0.22)', zIndex: 1 }}>
-            <video
-              autoPlay muted loop playsInline
+        {/* ── VIDEO COLUMN ── */}
+        <motion.div
+          className="about-video-wrap"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+          style={{ position: 'relative' }}
+        >
+          {/* Offset decorative frame */}
+          <div style={{ position: 'absolute', top: -20, left: -20, right: 20, bottom: 20, border: '1px solid rgba(201,168,76,0.22)', zIndex: 0, pointerEvents: 'none' }} />
+
+          {/* Video container */}
+          <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden', zIndex: 1, boxShadow: '-8px 16px 64px rgba(13,24,56,0.2)' }}>
+            <video autoPlay muted loop playsInline
               src="https://res.cloudinary.com/djhevgyvi/video/upload/v1773003521/almoco-orla_lehs7l.mp4"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.8s ease' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
-            {/* Gradient overlay bottom */}
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(13,24,56,0.35) 0%, transparent 50%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(13,24,56,0.28) 0%, transparent 55%)', pointerEvents: 'none' }} />
           </div>
 
-          {/* Corner accents */}
-          {[
-            { top: -16, left: -16 },
-            { top: -16, right: -16 },
-            { bottom: -16, left: -16 },
-            { bottom: -16, right: -16 },
-          ].map((pos, i) => (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                width: 20,
-                height: 20,
-                borderTop: i < 2 ? '2px solid var(--gold)' : undefined,
-                borderBottom: i >= 2 ? '2px solid var(--gold)' : undefined,
-                borderLeft: i % 2 === 0 ? '2px solid var(--gold)' : undefined,
-                borderRight: i % 2 === 1 ? '2px solid var(--gold)' : undefined,
-                zIndex: 2,
-                ...pos,
-              }}
-            />
+          {/* Corner marks */}
+          {([
+            { top: -20, left: -20 },
+            { top: -20, right: -20 },
+            { bottom: 20, left: -20 },
+            { bottom: 20, right: -20 },
+          ] as React.CSSProperties[]).map((pos, i) => (
+            <div key={i} style={{
+              position: 'absolute', width: 18, height: 18, zIndex: 2,
+              borderTop: i < 2 ? '2px solid var(--gold)' : undefined,
+              borderBottom: i >= 2 ? '2px solid var(--gold)' : undefined,
+              borderLeft: i % 2 === 0 ? '2px solid var(--gold)' : undefined,
+              borderRight: i % 2 === 1 ? '2px solid var(--gold)' : undefined,
+              ...pos,
+            }} />
           ))}
 
-          {/* Badge 38 anos */}
+          {/* Badge 38 */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.7 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.6, y: 10 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
+            transition={{ delay: 0.6, type: 'spring', stiffness: 180 }}
             style={{
-              position: 'absolute',
-              bottom: -28,
-              right: -28,
+              position: 'absolute', bottom: -24, right: -24, zIndex: 3,
               background: 'var(--navy)',
-              padding: '24px 28px',
-              boxShadow: '0 24px 60px rgba(13,24,56,0.45), 0 0 0 1px rgba(201,168,76,0.25)',
-              zIndex: 3,
+              padding: '22px 26px',
+              boxShadow: '0 20px 56px rgba(13,24,56,0.5), inset 0 0 0 1px rgba(201,168,76,0.2)',
             }}
           >
-            <div style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--gold)', fontWeight: 900, fontSize: '3rem', lineHeight: 1 }}>38</div>
-            <div style={{ fontSize: '0.55rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)', marginTop: 2 }}>Anos</div>
+            <div style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--gold)', fontWeight: 900, fontSize: '2.8rem', lineHeight: 1 }}>38</div>
+            <div style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginTop: 3 }}>Anos</div>
           </motion.div>
         </motion.div>
 
-        {/* Text Column */}
+        {/* ── TEXT COLUMN ── */}
         <motion.div
-          initial={{ opacity: 0, x: 60 }}
+          initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
         >
           <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            style={{ fontFamily: 'var(--font-great-vibes), cursive', fontSize: '3rem', color: 'var(--gold)', display: 'block' }}
+            initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
+            style={{ fontFamily: 'var(--font-great-vibes), cursive', fontSize: '2.8rem', color: 'var(--gold)', display: 'block', lineHeight: 1.1 }}
           >
             O Pharol
           </motion.span>
 
           <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            style={{ margin: '4px 0 22px', fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', color: 'var(--navy)', lineHeight: 1.12, fontWeight: 400 }}
+            initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.22 }}
+            style={{ margin: '6px 0 0', fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(1.75rem, 2.8vw, 2.35rem)', color: 'var(--navy)', lineHeight: 1.1, fontWeight: 400 }}
           >
             Uma experiência{' '}
             <em style={{ color: 'var(--red)', fontStyle: 'italic' }}>única</em>{' '}
             à beira-mar
           </motion.h2>
 
-          <div style={{ width: 48, height: 2, background: 'var(--gold)', marginBottom: 24 }} />
+          {/* Gold divider */}
+          <motion.div
+            initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.6 }}
+            style={{ width: 52, height: 2, background: 'linear-gradient(90deg, var(--gold), transparent)', margin: '20px 0 22px', transformOrigin: 'left' }}
+          />
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.35 }}
-            style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.18rem', lineHeight: 1.95, color: 'var(--text-mid)', marginBottom: 14 }}
-          >
-            Situado no coração da Avenida Atlântica, O Pharol ilumina o cenário gastronômico de Balneário Camboriú desde 1986. Como um farol que guia os navegantes ao porto seguro, nosso restaurante conduz cada hóspede a uma jornada gastronômica inesquecível.
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.32 }}
+            style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.16rem', lineHeight: 1.9, color: 'var(--text-mid)', marginBottom: 12 }}>
+            Situado no coração da Avenida Atlântica, O Pharol ilumina o cenário gastronômico de Balneário Camboriú desde 1986. Como um farol que guia os navegantes ao porto seguro, nosso restaurante conduz cada hóspede a uma jornada inesquecível.
           </motion.p>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.42 }}
-            style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.18rem', lineHeight: 1.95, color: 'var(--text-mid)', marginBottom: 32 }}
-          >
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.38 }}
+            style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.16rem', lineHeight: 1.9, color: 'var(--text-mid)', marginBottom: 32 }}>
             Especialistas em frutos do mar frescos, combinamos a riqueza do oceano com técnicas clássicas da culinária brasileira litorânea, criando pratos que contam a história de nossa terra e do nosso mar.
           </motion.p>
 
-          {/* Feature grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 36 }}>
-            {features.map(({ icon, label, desc }, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.45 + i * 0.08 }}
-                whileHover={{ x: 4 }}
-                style={{
-                  display: 'flex',
-                  gap: 12,
-                  padding: '14px 16px',
-                  border: '1px solid rgba(201,168,76,0.15)',
-                  background: 'rgba(201,168,76,0.02)',
-                  transition: 'border-color 0.3s, background 0.3s',
-                }}
+          {/* Features */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 36 }}>
+            {features.map(({ Icon, label, desc }, i) => (
+              <motion.div key={label}
+                initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 + i * 0.07 }}
+                whileHover={{ borderColor: 'rgba(201,168,76,0.35)', background: 'rgba(201,168,76,0.03)' }}
+                style={{ display: 'flex', gap: 12, padding: '14px 16px', border: '1px solid rgba(201,168,76,0.14)', transition: 'all 0.3s', cursor: 'default' }}
               >
-                <span style={{ fontSize: '1.2rem', flexShrink: 0 }}>{icon}</span>
+                <div style={{ width: 34, height: 34, flexShrink: 0, display: 'grid', placeItems: 'center', border: '1px solid rgba(201,168,76,0.2)', color: 'var(--gold)' }}>
+                  <Icon />
+                </div>
                 <div>
-                  <div style={{ fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--navy)', fontWeight: 700, marginBottom: 2 }}>{label}</div>
-                  <div style={{ fontFamily: 'var(--font-cormorant), serif', color: 'var(--text-mid)', fontSize: '0.95rem', lineHeight: 1.4 }}>{desc}</div>
+                  <div style={{ fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--navy)', fontWeight: 700, marginBottom: 3 }}>{label}</div>
+                  <div style={{ fontFamily: 'var(--font-cormorant), serif', color: 'var(--text-mid)', fontSize: '0.94rem', lineHeight: 1.4 }}>{desc}</div>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <motion.a
-            href="#menu"
-            whileHover={{ x: 6 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              border: '1px solid var(--navy)',
-              color: 'var(--navy)',
-              padding: '13px 28px',
-              fontSize: '0.68rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.16em',
-              fontWeight: 600,
-            }}
+          {/* CTA */}
+          <motion.a href="#menu"
+            whileHover={{ gap: '16px' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, border: '1px solid rgba(27,43,107,0.5)', color: 'var(--navy)', padding: '13px 28px', fontSize: '0.64rem', textTransform: 'uppercase', letterSpacing: '0.18em', fontWeight: 600, transition: 'all 0.3s' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--navy)'; e.currentTarget.style.color = 'var(--gold)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--navy)' }}
           >
             Explorar o Cardápio
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </motion.a>
         </motion.div>
       </div>

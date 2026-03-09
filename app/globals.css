@@ -97,11 +97,12 @@ input, select, textarea, button { font-family: inherit; outline: none; }
 .btn-primary {
   background: var(--gold);
   color: var(--navy-deep);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  padding: 18px 48px;
+  padding: 17px 46px;
+  box-shadow: 0 4px 24px rgba(201,168,76,0.18);
 }
 
 .btn-primary::after {
@@ -266,6 +267,13 @@ input, select, textarea, button { font-family: inherit; outline: none; }
 
 .cred-item:last-child { border-right: none; }
 .cred-item:hover { background: rgba(201,168,76,0.04); }
+
+/* Location grid responsive */
+@media (max-width: 860px) {
+  .location-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
