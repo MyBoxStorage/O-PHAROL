@@ -50,7 +50,7 @@ export default function Footer({ onReserve, onQueue, onClientArea, onAdmin }: Fo
         </div>
 
         {/* Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 32 }}>
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 32 }}>
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 18 }}>
@@ -166,9 +166,9 @@ export default function Footer({ onReserve, onQueue, onClientArea, onAdmin }: Fo
         </div>
 
         {/* Bottom bar */}
-        <div style={{ marginTop: 56, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', gap: 16, justifyContent: 'space-between', flexWrap: 'wrap', fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)' }}>
+        <div className="footer-bottom" style={{ marginTop: 56, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', gap: 16, justifyContent: 'space-between', flexWrap: 'wrap', fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)' }}>
           <div>© 2024 O Pharol Restaurante Gourmet LTDA · CNPJ 18.618.919/0001-09</div>
-          <div style={{ display: 'flex', gap: 16 }}>
+          <div className="footer-bottom-links" style={{ display: 'flex', gap: 16 }}>
             <a href="#" style={{ color: 'rgba(255,255,255,0.3)', transition: 'color 0.3s' }}
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--gold)')}
               onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}

@@ -387,7 +387,30 @@ export const menuTabs: MenuTab[] = [
         ],
       },
       {
-        title: 'Coquetéis & Caipirinha',
+        title: 'Drinks & Coquetéis Autorais',
+        items: [
+          { num: '132', name: 'Coquetel de Maracujá', desc: 'Maracujá, vodka e leite condensado', price: 'R$ 39,90' },
+          { num: '135', name: 'Coquetel de Frutas', desc: 'Suco de laranja, morango, abacaxi, melancia, banana e leite condensado (com ou sem álcool)', price: 'R$ 44,90' },
+          { num: '134', name: 'Coquetel de Morango com Vinho', desc: 'Morango, vinho e leite condensado', price: 'R$ 39,90' },
+          { num: '715', name: 'Coquetel Abacaxi com Vinho', desc: 'Abacaxi, vinho e leite condensado', price: 'R$ 39,90' },
+          { num: '133', name: 'Mojito', desc: 'Bacardi, limão espremido, hortelã e água com gás', price: 'R$ 44,90' },
+          { num: '136', name: 'Kir Royal', desc: 'Espumante Terra Nova e licor de cassis', price: 'R$ 44,90' },
+          { num: '405', name: 'Whisky Sour', desc: 'Johnnie Red, limão espremido e açúcar', price: 'R$ 44,90' },
+          { num: '403', name: 'Gin Pharol', desc: 'Gin Gordons, tônica zero, morango e hibisco', price: 'R$ 47,90' },
+          { num: '406', name: 'Gin Camboriú', desc: 'Gin Gordons, curaçau blue e Redbull sabor açaí', price: 'R$ 44,90' },
+          { num: '407', name: 'Gin Tropical', desc: 'Gin Gordons, laranja e Redbull sabor tropical', price: 'R$ 47,90' },
+          { num: '328', name: 'Gin Tônica Soda de Hibisco', desc: 'Gin Gordons, tônica e Monin de hibisco', price: 'R$ 44,90' },
+          { num: '551', name: 'Gin Tônica Soda de Pêssego', desc: 'Gin Gordons, tônica e Monin de pêssego', price: 'R$ 44,90' },
+          { num: '550', name: 'Gin Tônica Soda de Maçã Verde', desc: 'Gin Gordons, tônica e Monin de maçã verde', price: 'R$ 44,90' },
+          { num: '646', name: 'Gin Pepino', desc: 'Gin Gordons, tônica, pepino japonês, anis estrelado e zimbro', price: 'R$ 44,90' },
+          { num: '552', name: 'Sunshine', desc: 'Bacardi Big Apple e abacaxi macerado', price: 'R$ 44,90' },
+          { num: '553', name: 'Pharol Apple', desc: 'Bacardi Big Apple, limão siciliano e Schweppes', price: 'R$ 44,90' },
+          { num: '710', name: 'Sex on the Beach', desc: 'Vodka, licor de pêssego, xarope de groselha e suco de laranja', price: 'R$ 44,90' },
+          { num: '712', name: 'Piña Colada', desc: 'Bacardi, Contreau, abacaxi, creme de leite e leite condensado', price: 'R$ 44,90' },
+        ],
+      },
+      {
+        title: 'Coquetéis Clássicos & Caipirinha',
         items: [
           { num: '101', name: 'Aperol Spritz', price: 'R$ 44,90' },
           { num: '130', name: 'Alexander', price: 'R$ 44,90' },
@@ -397,6 +420,13 @@ export const menuTabs: MenuTab[] = [
           { num: '138', name: 'Caipirinha Bacardi / Steinhaeger', price: 'R$ 39,00' },
           { num: '140', name: 'Sangria (vinho com fruta)', price: 'R$ 89,00' },
           { num: '141', name: 'Caipirinha Absolut', price: 'R$ 49,00' },
+        ],
+      },
+      {
+        title: 'Águas Especiais',
+        items: [
+          { num: '189', name: 'Água Mineral Perrier', desc: 'Garrafa francesa 330ml', price: 'R$ 35,90' },
+          { num: '203', name: 'Água Mineral Pellegrino', desc: 'Garrafa italiana 505ml', price: 'R$ 37,90' },
         ],
       },
       {

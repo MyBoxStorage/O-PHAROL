@@ -61,7 +61,7 @@ export default function Location() {
         </motion.div>
 
         {/* ── Grid ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.35fr', gap: 48, alignItems: 'start' }}>
+        <div className="location-main-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.35fr', gap: 48, alignItems: 'start' }}>
 
           {/* ── Info card ── */}
           <motion.div
@@ -156,7 +156,7 @@ export default function Location() {
             style={{ position: 'relative' }}
           >
             {/* Decorative frame */}
-            <div style={{ position: 'absolute', top: -14, right: -14, bottom: 14, left: 14, border: '1px solid rgba(201,168,76,0.2)', zIndex: 0, pointerEvents: 'none' }} />
+            <div className="location-map-deco" style={{ position: 'absolute', top: -14, right: -14, bottom: 14, left: 14, border: '1px solid rgba(201,168,76,0.2)', zIndex: 0, pointerEvents: 'none' }} />
 
             <div style={{ position: 'relative', zIndex: 1, overflow: 'hidden', aspectRatio: '4/3', boxShadow: '12px 20px 60px rgba(13,24,56,0.15)' }}>
               {/* Gold top bar */}

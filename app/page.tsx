@@ -10,6 +10,7 @@ import Showcase from '@/components/Showcase'
 import Menu from '@/components/Menu'
 import History from '@/components/History'
 import Location from '@/components/Location'
+import Valet from '@/components/Valet'
 import ReserveSection from '@/components/ReserveSection'
 import Footer from '@/components/Footer'
 import ReservationOverlay from '@/components/overlays/ReservationOverlay'
@@ -42,6 +43,7 @@ export default function Page() {
         <Menu />
         <History />
         <Location />
+        <Valet />
         <ReserveSection onOpenFullReservation={() => setOpenReservation(true)} />
       </main>
 

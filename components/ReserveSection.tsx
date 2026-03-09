@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 type ReserveSectionProps = {
   onOpenFullReservation: () => void
@@ -10,16 +11,19 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
   const [nome, setNome] = useState('')
   const [data, setData] = useState('')
   const [hora, setHora] = useState('11h30')
-  const [pessoas, setPessoas] = useState('1 pessoa')
+  const [pessoas, setPessoas] = useState('2 pessoas')
   const [whatsapp, setWhatsapp] = useState('')
   const [preferenciaMesa, setPreferenciaMesa] = useState('Varanda (vista para o mar)')
   const [observacoes, setObservacoes] = useState('')
+  const [consentimento, setConsentimento] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
   const handleSubmit = () => {
     if (!nome.trim() || !data || !whatsapp.trim()) {
       alert('Preencha nome, data e WhatsApp para continuar.')
       return
     }
+    const sorteioTxt = consentimento ? '\n🎁 Aceita participar dos benefícios e sorteios de parceiros' : ''
     const msg = encodeURIComponent(
       `*Reserva — O Pharol*\n\n` +
       `👤 Nome: ${nome}\n` +
@@ -28,13 +32,26 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
       `👥 Pessoas: ${pessoas}\n` +
       `🪑 Mesa: ${preferenciaMesa}\n` +
       `📱 WhatsApp: ${whatsapp}` +
-      (observacoes ? `\n📝 Obs: ${observacoes}` : '')
+      (observacoes ? `\n📝 Obs: ${observacoes}` : '') +
+      sorteioTxt +
+      `\n\n✨ Para personalizar seu prato (ponto das carnes, massas e preferências da cozinha), acesse sua área do cliente em: https://o-pharol.vercel.app`
     )
     window.open(`https://wa.me/554733673800?text=${msg}`, '_blank')
+    setSubmitted(true)
   }
 
-  const inputStyle: React.CSSProperties = { width: '100%', marginTop: 8, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--white)', padding: '12px 16px' }
-  const labelStyle: React.CSSProperties = { color: 'var(--gold)', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' }
+  const inputStyle: React.CSSProperties = {
+    width: '100%', marginTop: 8,
+    background: 'rgba(255,255,255,0.06)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    color: 'var(--white)', padding: '12px 16px',
+    fontSize: '0.88rem',
+  }
+  const labelStyle: React.CSSProperties = {
+    color: 'var(--gold)', fontSize: '0.58rem',
+    letterSpacing: '0.2em', textTransform: 'uppercase',
+    fontFamily: 'var(--font-montserrat), sans-serif',
+  }
 
   return (
     <section id="reserve-section" className="section" style={{ background: 'var(--navy)', position: 'relative', overflow: 'hidden' }}>
@@ -44,49 +61,101 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
         <div className="section-header">
           <span className="section-label" style={{ color: 'rgba(201,168,76,0.7)' }}>Reserve Sua Mesa</span>
           <h2 className="section-title" style={{ color: 'var(--white)' }}>Garanta sua <em style={{ color: 'var(--gold)' }}>experiência</em></h2>
-          <p className="section-sub" style={{ color: 'rgba(255,255,255,0.6)' }}>Reserve sua mesa com antecedência e personalize sua experiência.</p>
+          <p className="section-sub" style={{ color: 'rgba(255,255,255,0.6)' }}>Reserve sua mesa com antecedência e personalize cada detalhe da sua visita.</p>
         </div>
 
-        <div style={{ marginTop: 42, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.2)', padding: 48, textAlign: 'left' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginBottom: 20 }}>
-            <div><label style={labelStyle}>Nome completo</label><input value={nome} onChange={(e) => setNome(e.target.value)} style={inputStyle} /></div>
-            <div><label style={labelStyle}>Data</label><input type="date" value={data} onChange={(e) => setData(e.target.value)} style={inputStyle} /></div>
-            <div>
-              <label style={labelStyle}>Horário</label>
-              <select value={hora} onChange={(e) => setHora(e.target.value)} style={inputStyle}>
-                {['11h30','12h00','12h30','13h00','19h00','19h30','20h00','20h30','21h00','21h30','22h00'].map((t) => <option key={t}>{t}</option>)}
-              </select>
-            </div>
-            <div>
-              <label style={labelStyle}>Pessoas</label>
-              <select value={pessoas} onChange={(e) => setPessoas(e.target.value)} style={inputStyle}>
-                {['1 pessoa','2 pessoas','3 pessoas','4 pessoas','5 pessoas','6+ pessoas'].map((t) => <option key={t}>{t}</option>)}
-              </select>
-            </div>
-            <div><label style={labelStyle}>WhatsApp</label><input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} style={inputStyle} /></div>
-            <div>
-              <label style={labelStyle}>Preferência de mesa</label>
-              <select value={preferenciaMesa} onChange={(e) => setPreferenciaMesa(e.target.value)} style={inputStyle}>
-                {['Varanda (vista para o mar)','Salão interno (climatizado)','Sem preferência'].map((t) => <option key={t}>{t}</option>)}
-              </select>
-            </div>
-            <div style={{ gridColumn: '1 / -1' }}>
-              <label style={labelStyle}>Observações (alergias, ocasião especial, etc.)</label>
-              <textarea value={observacoes} onChange={(e) => setObservacoes(e.target.value)} style={{ ...inputStyle, minHeight: 90 }} />
-            </div>
-          </div>
+        <AnimatePresence mode="wait">
+          {submitted ? (
+            <motion.div key="success" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.2)', padding: '48px 32px', textAlign: 'center' }}>
+              <div style={{ fontFamily: 'var(--font-great-vibes), cursive', fontSize: '3rem', color: 'var(--gold)', marginBottom: 16 }}>Perfeito!</div>
+              <p style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.2rem', color: 'rgba(255,255,255,0.8)', fontStyle: 'italic', marginBottom: 24 }}>
+                Sua reserva foi enviada com sucesso. Nossa equipe confirmará pelo WhatsApp em breve.
+              </p>
+              <div style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.2)', padding: '20px 28px', marginBottom: 28, textAlign: 'left' }}>
+                <div style={{ color: 'var(--gold)', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 10, fontFamily: 'var(--font-montserrat), sans-serif' }}>Próximo passo — Área do Cliente</div>
+                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', margin: 0, lineHeight: 1.7 }}>
+                  Acesse a <strong style={{ color: 'var(--gold)' }}>Área do Cliente</strong> para personalizar seu prato: ponto das carnes, preparo de massas e observações direto para a cozinha. Sua mesa será preparada exatamente do seu jeito.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button className="btn-primary" onClick={onOpenFullReservation}>Acessar Área do Cliente</button>
+                <button className="btn-secondary" onClick={() => setSubmitted(false)}>Nova Reserva</button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="reserve-form-wrap" style={{ marginTop: 42, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.2)', padding: 48, textAlign: 'left' }}>
+              <div className="reserve-form-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginBottom: 20 }}>
+                <div><label style={labelStyle}>Nome completo</label><input value={nome} onChange={(e) => setNome(e.target.value)} style={inputStyle} /></div>
+                <div><label style={labelStyle}>Data</label><input type="date" value={data} onChange={(e) => setData(e.target.value)} style={inputStyle} /></div>
+                <div>
+                  <label style={labelStyle}>Horário</label>
+                  <select value={hora} onChange={(e) => setHora(e.target.value)} style={inputStyle}>
+                    {['11h30','12h00','12h30','13h00','19h00','19h30','20h00','20h30','21h00','21h30','22h00'].map((t) => <option key={t}>{t}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label style={labelStyle}>Pessoas</label>
+                  <select value={pessoas} onChange={(e) => setPessoas(e.target.value)} style={inputStyle}>
+                    {['1 pessoa','2 pessoas','3 pessoas','4 pessoas','5 pessoas','6+ pessoas'].map((t) => <option key={t}>{t}</option>)}
+                  </select>
+                </div>
+                <div><label style={labelStyle}>WhatsApp</label><input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} style={inputStyle} /></div>
+                <div>
+                  <label style={labelStyle}>Preferência de mesa</label>
+                  <select value={preferenciaMesa} onChange={(e) => setPreferenciaMesa(e.target.value)} style={inputStyle}>
+                    {['Varanda (vista para o mar)','Salão interno (climatizado)','Sem preferência'].map((t) => <option key={t}>{t}</option>)}
+                  </select>
+                </div>
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <label style={labelStyle}>Observações (alergias, ocasião especial, etc.)</label>
+                  <textarea value={observacoes} onChange={(e) => setObservacoes(e.target.value)} style={{ ...inputStyle, minHeight: 80 }} />
+                </div>
+              </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-            <p style={{ margin: 0, color: 'rgba(255,255,255,0.55)', fontSize: '0.8rem' }}>Para grupos acima de 20 pessoas, utilize a área completa de reservas.</p>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <button onClick={handleSubmit} className="btn-primary">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.525 5.84L0 24l6.306-1.505A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.82 9.82 0 01-5.006-1.368l-.36-.214-3.741.893.942-3.648-.235-.374A9.797 9.797 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
-                Enviar Reserva via WhatsApp
-              </button>
-              <button onClick={onOpenFullReservation} className="btn-secondary">Reserva Completa</button>
-            </div>
-          </div>
-        </div>
+              {/* ── Box de consentimento / CRM ── */}
+              <div
+                onClick={() => setConsentimento((v) => !v)}
+                style={{
+                  marginBottom: 28, padding: '18px 20px', cursor: 'pointer',
+                  background: consentimento ? 'rgba(201,168,76,0.1)' : 'rgba(255,255,255,0.03)',
+                  border: `1px solid ${consentimento ? 'rgba(201,168,76,0.45)' : 'rgba(255,255,255,0.08)'}`,
+                  display: 'flex', gap: 16, alignItems: 'flex-start',
+                  transition: 'all 0.35s',
+                }}
+              >
+                <div style={{
+                  width: 20, height: 20, border: `2px solid ${consentimento ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}`,
+                  background: consentimento ? 'var(--gold)' : 'transparent',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0, marginTop: 2, transition: 'all 0.3s',
+                }}>
+                  {consentimento && <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="var(--navy-deep)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                </div>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.72rem', fontWeight: 600, color: consentimento ? 'var(--gold)' : 'rgba(255,255,255,0.8)', letterSpacing: '0.05em', marginBottom: 5 }}>
+                    🎁 Quero experiências exclusivas e vantagens especiais
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.55)', lineHeight: 1.55 }}>
+                    Ao marcar, você permite que O Pharol compartilhe suas preferências com parceiros selecionados para oferecer benefícios personalizados — e ainda participa automaticamente dos <strong style={{ color: 'var(--gold-light)', fontStyle: 'normal' }}>sorteios semanais</strong> com prêmios dos nossos parceiros exclusivos.
+                  </div>
+                </div>
+              </div>
+
+              <div className="reserve-form-actions" style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+                <p style={{ margin: 0, color: 'rgba(255,255,255,0.45)', fontSize: '0.75rem' }}>Para grupos acima de 20 pessoas, utilize a reserva completa.</p>
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                  <button onClick={handleSubmit} className="btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.525 5.84L0 24l6.306-1.505A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.82 9.82 0 01-5.006-1.368l-.36-.214-3.741.893.942-3.648-.235-.374A9.797 9.797 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12c0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+                    Enviar Reserva via WhatsApp
+                  </button>
+                  <button onClick={onOpenFullReservation} className="btn-secondary">Reserva Completa</button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   )

@@ -275,6 +275,66 @@ input, select, textarea, button { font-family: inherit; outline: none; }
   }
 }
 
+/* ===== MENU TABS RESPONSIVE ===== */
+@media (min-width: 640px) {
+  .menu-tabs-mobile { display: none !important; }
+  .menu-list-desktop { display: block !important; }
+  .menu-list-mobile { display: none !important; }
+}
+
+@media (max-width: 639px) {
+  .menu-tabs-desktop { display: none !important; }
+  .menu-tabs-mobile { display: grid !important; }
+  .menu-list-desktop { display: none !important; }
+  .menu-list-mobile { display: block !important; }
+}
+
+/* ===== FOOTER MOBILE ===== */
+@media (max-width: 767px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .footer-bottom {
+    flex-direction: column !important;
+    gap: 10px !important;
+    text-align: center !important;
+  }
+  .footer-bottom-links {
+    justify-content: center !important;
+  }
+}
+
+/* ===== LOCATION MOBILE ===== */
+@media (max-width: 767px) {
+  .location-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .location-map-deco {
+    display: none !important;
+  }
+}
+
+/* ===== RESERVE SECTION MOBILE ===== */
+@media (max-width: 767px) {
+  .reserve-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .reserve-form-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .reserve-form-actions .btn-primary,
+  .reserve-form-actions .btn-secondary {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .reserve-form-wrap {
+    padding: 28px 20px !important;
+  }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .container { width: min(1200px, 100% - 40px); }
