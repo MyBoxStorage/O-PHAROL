@@ -15,7 +15,6 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
   const [whatsapp, setWhatsapp] = useState('')
   const [preferenciaMesa, setPreferenciaMesa] = useState('Varanda (vista para o mar)')
   const [observacoes, setObservacoes] = useState('')
-  const [consentimento, setConsentimento] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
   const handleSubmit = () => {
@@ -23,7 +22,6 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
       alert('Preencha nome, data e WhatsApp para continuar.')
       return
     }
-    const sorteioTxt = consentimento ? '\n🎁 Aceita participar dos benefícios e sorteios de parceiros' : ''
     const msg = encodeURIComponent(
       `*Reserva — O Pharol*\n\n` +
       `👤 Nome: ${nome}\n` +
@@ -33,8 +31,7 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
       `🪑 Mesa: ${preferenciaMesa}\n` +
       `📱 WhatsApp: ${whatsapp}` +
       (observacoes ? `\n📝 Obs: ${observacoes}` : '') +
-      sorteioTxt +
-      `\n\n✨ Para personalizar seu prato (ponto das carnes, massas e preferências da cozinha), acesse sua área do cliente em: https://o-pharol.vercel.app`
+      `\n\n✨ Para personalizar seu prato, acesse sua área do cliente em: https://o-pharol.vercel.app`
     )
     window.open(`https://wa.me/554733673800?text=${msg}`, '_blank')
     setSubmitted(true)
@@ -111,35 +108,6 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
                 <div style={{ gridColumn: '1 / -1' }}>
                   <label style={labelStyle}>Observações (alergias, ocasião especial, etc.)</label>
                   <textarea value={observacoes} onChange={(e) => setObservacoes(e.target.value)} style={{ ...inputStyle, minHeight: 80 }} />
-                </div>
-              </div>
-
-              {/* ── Box de consentimento / CRM ── */}
-              <div
-                onClick={() => setConsentimento((v) => !v)}
-                style={{
-                  marginBottom: 28, padding: '18px 20px', cursor: 'pointer',
-                  background: consentimento ? 'rgba(201,168,76,0.1)' : 'rgba(255,255,255,0.03)',
-                  border: `1px solid ${consentimento ? 'rgba(201,168,76,0.45)' : 'rgba(255,255,255,0.08)'}`,
-                  display: 'flex', gap: 16, alignItems: 'flex-start',
-                  transition: 'all 0.35s',
-                }}
-              >
-                <div style={{
-                  width: 20, height: 20, border: `2px solid ${consentimento ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}`,
-                  background: consentimento ? 'var(--gold)' : 'transparent',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0, marginTop: 2, transition: 'all 0.3s',
-                }}>
-                  {consentimento && <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="var(--navy-deep)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-                </div>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.72rem', fontWeight: 600, color: consentimento ? 'var(--gold)' : 'rgba(255,255,255,0.8)', letterSpacing: '0.05em', marginBottom: 5 }}>
-                    🎁 Quero experiências exclusivas e vantagens especiais
-                  </div>
-                  <div style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1rem', fontStyle: 'italic', color: 'rgba(255,255,255,0.55)', lineHeight: 1.55 }}>
-                    Ao marcar, você permite que O Pharol compartilhe suas preferências com parceiros selecionados para oferecer benefícios personalizados — e ainda participa automaticamente dos <strong style={{ color: 'var(--gold-light)', fontStyle: 'normal' }}>sorteios semanais</strong> com prêmios dos nossos parceiros exclusivos.
-                  </div>
                 </div>
               </div>
 

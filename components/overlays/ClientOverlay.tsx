@@ -151,6 +151,7 @@ function QueueInline() {
 export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
   const [screen, setScreen] = useState<'auth' | 'dashboard'>('auth')
   const [isRegister, setIsRegister] = useState(false)
+  const [consentimento, setConsentimento] = useState(false)
   const [tab, setTab] = useState('reservas')
   const [rating, setRating] = useState(0)
   const [showNewReserve, setShowNewReserve] = useState(false)
@@ -181,6 +182,38 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
                 {isRegister && (
                   <div style={{ marginTop: 14, padding: '14px 16px', background: 'rgba(201,168,76,0.06)', border: '1px solid rgba(201,168,76,0.2)', fontSize: '0.78rem', color: 'var(--text-mid)', lineHeight: 1.6 }}>
                     🎁 Ao criar sua conta, você poderá personalizar seus pratos, acompanhar pontos de fidelidade e participar dos sorteios semanais dos nossos parceiros.
+                  </div>
+                )}
+                {/* ── Box de consentimento CRM — só aparece no cadastro ── */}
+                {isRegister && (
+                  <div
+                    onClick={() => setConsentimento(v => !v)}
+                    style={{
+                      marginTop: 14, padding: '16px 18px', cursor: 'pointer',
+                      background: consentimento ? 'rgba(201,168,76,0.08)' : 'rgba(27,43,107,0.03)',
+                      border: `1px solid ${consentimento ? 'rgba(201,168,76,0.4)' : 'var(--cream-dark)'}`,
+                      display: 'flex', gap: 14, alignItems: 'flex-start',
+                      transition: 'all 0.3s',
+                    }}
+                  >
+                    <div style={{
+                      width: 20, height: 20, border: `2px solid ${consentimento ? 'var(--gold)' : 'var(--cream-dark)'}`,
+                      background: consentimento ? 'var(--gold)' : 'transparent',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      flexShrink: 0, marginTop: 2, transition: 'all 0.25s',
+                    }}>
+                      {consentimento && <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="var(--navy-deep)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.72rem', fontWeight: 600, color: consentimento ? 'var(--gold-dark)' : 'var(--navy)', letterSpacing: '0.04em', marginBottom: 4 }}>
+                        🎁 Quero experiências exclusivas e vantagens especiais
+                      </div>
+                      <div style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '0.95rem', fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: 1.55 }}>
+                        Ao marcar, você permite que O Pharol compartilhe suas preferências com parceiros selecionados — e participa automaticamente dos{' '}
+                        <strong style={{ color: 'var(--gold-dark)', fontStyle: 'normal' }}>sorteios semanais</strong>{' '}
+                        com prêmios exclusivos dos nossos parceiros.
+                      </div>
+                    </div>
                   </div>
                 )}
                 <button className="btn-primary" style={{ width: '100%', marginTop: 16 }} onClick={() => setScreen('dashboard')}>{isRegister ? 'Criar Conta' : 'Entrar'}</button>
