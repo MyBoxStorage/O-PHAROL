@@ -59,15 +59,17 @@ export default function LogoPharol({
         <polygon points="28.9,217.9 133.9,217.9 112.9,75.1 49.9,75.1" fill={body}/>
 
         {/* Listras diagonais */}
-        <polygon points="-21.4,217.9 4.6,217.9 203.5,4.8 177.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
-        <polygon points="4.6,217.9 30.6,217.9 229.5,4.8 203.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
-        <polygon points="30.6,217.9 56.6,217.9 255.5,4.8 229.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
-        <polygon points="56.6,217.9 82.6,217.9 281.5,4.8 255.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
-        <polygon points="82.6,217.9 108.6,217.9 307.5,4.8 281.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
-        <polygon points="108.6,217.9 134.6,217.9 333.5,4.8 307.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
-        <polygon points="134.6,217.9 160.6,217.9 359.5,4.8 333.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
-        <polygon points="160.6,217.9 186.6,217.9 385.5,4.8 359.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
-        <polygon points="186.6,217.9 212.6,217.9 411.5,4.8 385.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="-67.7,217.9 -44.6,217.9 142.3,4.8 119.2,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="-44.6,217.9 -21.5,217.9 165.4,4.8 142.3,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="-21.5,217.9 1.6,217.9 188.5,4.8 165.4,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="1.6,217.9 24.7,217.9 211.6,4.8 188.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="24.7,217.9 47.8,217.9 234.7,4.8 211.6,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="47.8,217.9 70.9,217.9 257.8,4.8 234.7,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="70.9,217.9 94.0,217.9 280.9,4.8 257.8,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="94.0,217.9 117.1,217.9 304.0,4.8 280.9,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="117.1,217.9 140.2,217.9 327.1,4.8 304.0,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="140.2,217.9 163.3,217.9 350.2,4.8 327.1,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="163.3,217.9 186.4,217.9 373.3,4.8 350.2,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
 
         {/* Contorno torre */}
         <polygon points="28.9,217.9 133.9,217.9 112.9,75.1 49.9,75.1" fill="none" stroke={stripe} strokeWidth="2.1" strokeLinejoin="round"/>
