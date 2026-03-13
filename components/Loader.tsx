@@ -10,42 +10,48 @@ export default function Loader({ onComplete }: LoaderProps) {
   const [visible, setVisible] = useState(true)
   const [phase, setPhase] = useState<'dark' | 'sweep' | 'reveal' | 'stable'>('dark')
   const logoRef = useRef<HTMLDivElement>(null)
-  const [tipPos, setTipPos] = useState({ x: 0, y: 0 })
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  // Calcular posição exata da ponta do farol em coordenadas da viewport
+  // Posição da ponta do farol em coordenadas do container (px)
+  const [tip, setTip] = useState({ x: 0, y: 0 })
+
   useEffect(() => {
     const calc = () => {
-      if (!logoRef.current) return
-      const rect = logoRef.current.getBoundingClientRect()
-      // Ponta do farol: x=19.4% do SVG, y=0.6% do SVG (calculado do viewBox 420x262)
-      const tipX = rect.left + rect.width * 0.194
-      const tipY = rect.top  + rect.height * 0.006
-      setTipPos({ x: tipX, y: tipY })
+      if (!logoRef.current || !containerRef.current) return
+      const logoRect = logoRef.current.getBoundingClientRect()
+      const contRect = containerRef.current.getBoundingClientRect()
+      // Ponta do farol: x=19.4%, y=0.6% do SVG renderizado (viewBox 420x262, size=360)
+      const tipX = (logoRect.left - contRect.left) + logoRect.width  * 0.194
+      const tipY = (logoRect.top  - contRect.top)  + logoRect.height * 0.006
+      setTip({ x: tipX, y: tipY })
     }
-    calc()
+    // Calcular após render
+    const raf = requestAnimationFrame(calc)
     window.addEventListener('resize', calc)
-    return () => window.removeEventListener('resize', calc)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', calc) }
   }, [])
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('sweep'),  350)
-    const t2 = setTimeout(() => setPhase('reveal'), 1000)
-    const t3 = setTimeout(() => setPhase('stable'), 1900)
+    const t1 = setTimeout(() => setPhase('sweep'),  300)
+    const t2 = setTimeout(() => setPhase('reveal'), 1100)
+    const t3 = setTimeout(() => setPhase('stable'), 2000)
     const t4 = setTimeout(() => {
       setVisible(false)
       setTimeout(onComplete, 600)
-    }, 3400)
+    }, 3500)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
   }, [onComplete])
 
-  // Posição da ponta em % da viewport para o conic-gradient
-  const tipXpct = typeof window !== 'undefined' ? (tipPos.x / window.innerWidth)  * 100 : 20
-  const tipYpct = typeof window !== 'undefined' ? (tipPos.y / window.innerHeight) * 100 : 40
+  // Comprimento do feixe — diagonal da tela
+  const beamLen = typeof window !== 'undefined'
+    ? Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2) * 1.1
+    : 1800
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
+          ref={containerRef}
           style={{
             position: 'fixed', inset: 0, zIndex: 9999,
             display: 'flex', flexDirection: 'column',
@@ -56,82 +62,144 @@ export default function Loader({ onComplete }: LoaderProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
         >
-          {/* ── FEIXE DE LUZ saindo da ponta do farol ── */}
-          {/* Cone dourado que varre como holofote girando */}
-          <motion.div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              pointerEvents: 'none',
-              // conic-gradient com origem exata na ponta do farol
-              background: `conic-gradient(
-                from 85deg at ${tipXpct.toFixed(1)}% ${tipYpct.toFixed(1)}%,
-                transparent           0deg,
-                rgba(201,168,76,0.04) 4deg,
-                rgba(201,168,76,0.13) 10deg,
-                rgba(255,248,210,0.20) 15deg,
-                rgba(201,168,76,0.13) 20deg,
-                rgba(201,168,76,0.04) 26deg,
-                transparent           30deg,
-                transparent           360deg
-              )`,
-            }}
-            initial={{ opacity: 0, rotate: -25 }}
-            animate={
-              phase === 'dark'   ? { opacity: 0,   rotate: -25 } :
-              phase === 'sweep'  ? { opacity: 1,   rotate: 0   } :
-              phase === 'reveal' ? { opacity: 0.7, rotate: 18  } :
-                                   { opacity: 0,   rotate: 35  }
-            }
-            transition={{ duration: 1.0, ease: [0.25, 0.46, 0.45, 0.94] }}
-          />
-
-          {/* Segundo feixe mais difuso, movimento ligeiramente diferente */}
-          <motion.div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              pointerEvents: 'none',
-              background: `conic-gradient(
-                from 85deg at ${tipXpct.toFixed(1)}% ${tipYpct.toFixed(1)}%,
-                transparent            0deg,
-                rgba(201,168,76,0.03)  8deg,
-                rgba(255,248,210,0.10) 18deg,
-                rgba(201,168,76,0.03)  28deg,
-                transparent            38deg,
-                transparent            360deg
-              )`,
-            }}
-            initial={{ opacity: 0, rotate: -35 }}
-            animate={
-              phase === 'dark'   ? { opacity: 0,   rotate: -35 } :
-              phase === 'sweep'  ? { opacity: 0.8, rotate: -8  } :
-              phase === 'reveal' ? { opacity: 0.5, rotate: 25  } :
-                                   { opacity: 0,   rotate: 45  }
-            }
-            transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
-          />
-
-          {/* ── CANTOS DECORATIVOS ── */}
-          {(['top-left','top-right','bottom-left','bottom-right'] as const).map((pos, i) => (
-            <motion.div
-              key={pos}
+          {/* ── FEIXE DE LUZ — SVG com pivot FIXO na ponta do farol ── */}
+          {tip.x > 0 && (
+            <svg
               style={{
                 position: 'absolute',
-                ...(pos.includes('top')    ? { top: 28 }    : { bottom: 28 }),
-                ...(pos.includes('left')   ? { left: 28 }   : { right: 28 }),
-                width: 36, height: 36,
-                borderTop:    pos.includes('top')    ? '1px solid rgba(201,168,76,0.45)' : undefined,
-                borderBottom: pos.includes('bottom') ? '1px solid rgba(201,168,76,0.45)' : undefined,
-                borderLeft:   pos.includes('left')   ? '1px solid rgba(201,168,76,0.45)' : undefined,
-                borderRight:  pos.includes('right')  ? '1px solid rgba(201,168,76,0.45)' : undefined,
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                overflow: 'visible',
               }}
+            >
+              <defs>
+                {/* Gradiente do feixe: forte na origem, dissolve na ponta */}
+                <linearGradient id="beamGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stopColor="rgba(201,168,76,0.0)"/>
+                  <stop offset="8%"   stopColor="rgba(201,168,76,0.22)"/>
+                  <stop offset="30%"  stopColor="rgba(255,248,210,0.18)"/>
+                  <stop offset="70%"  stopColor="rgba(201,168,76,0.08)"/>
+                  <stop offset="100%" stopColor="rgba(201,168,76,0.0)"/>
+                </linearGradient>
+                <linearGradient id="beamGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stopColor="rgba(201,168,76,0.0)"/>
+                  <stop offset="5%"   stopColor="rgba(201,168,76,0.12)"/>
+                  <stop offset="40%"  stopColor="rgba(255,248,210,0.10)"/>
+                  <stop offset="100%" stopColor="rgba(201,168,76,0.0)"/>
+                </linearGradient>
+
+                {/* Máscara do feixe principal: triângulo cônico */}
+                <clipPath id="beam1Clip">
+                  {/* Triângulo com vértice na ponta do farol */}
+                  <polygon
+                    points={`
+                      ${tip.x},${tip.y}
+                      ${tip.x + beamLen * Math.cos(Math.PI * 0.08)},${tip.y + beamLen * Math.sin(Math.PI * 0.08)}
+                      ${tip.x + beamLen * Math.cos(Math.PI * 0.22)},${tip.y + beamLen * Math.sin(Math.PI * 0.22)}
+                    `}
+                  />
+                </clipPath>
+                <clipPath id="beam2Clip">
+                  <polygon
+                    points={`
+                      ${tip.x},${tip.y}
+                      ${tip.x + beamLen * Math.cos(Math.PI * 0.04)},${tip.y + beamLen * Math.sin(Math.PI * 0.04)}
+                      ${tip.x + beamLen * Math.cos(Math.PI * 0.26)},${tip.y + beamLen * Math.sin(Math.PI * 0.26)}
+                    `}
+                  />
+                </clipPath>
+              </defs>
+
+              {/* Feixe principal — gira em torno da ponta do farol */}
+              <motion.g
+                style={{ transformOrigin: `${tip.x}px ${tip.y}px` }}
+                initial={{ rotate: -30, opacity: 0 }}
+                animate={
+                  phase === 'dark'   ? { rotate: -30, opacity: 0   } :
+                  phase === 'sweep'  ? { rotate:   0, opacity: 1   } :
+                  phase === 'reveal' ? { rotate:  22, opacity: 0.7 } :
+                                       { rotate:  40, opacity: 0   }
+                }
+                transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                {/* Triângulo de luz cônico */}
+                <polygon
+                  points={`
+                    ${tip.x},${tip.y}
+                    ${tip.x + beamLen * Math.cos(Math.PI * 0.08)},${tip.y + beamLen * Math.sin(Math.PI * 0.08)}
+                    ${tip.x + beamLen * Math.cos(Math.PI * 0.22)},${tip.y + beamLen * Math.sin(Math.PI * 0.22)}
+                  `}
+                  fill="url(#beamGrad1)"
+                  opacity={0.9}
+                />
+              </motion.g>
+
+              {/* Feixe secundário mais difuso */}
+              <motion.g
+                style={{ transformOrigin: `${tip.x}px ${tip.y}px` }}
+                initial={{ rotate: -45, opacity: 0 }}
+                animate={
+                  phase === 'dark'   ? { rotate: -45, opacity: 0   } :
+                  phase === 'sweep'  ? { rotate:  -8, opacity: 0.6 } :
+                  phase === 'reveal' ? { rotate:  30, opacity: 0.4 } :
+                                       { rotate:  55, opacity: 0   }
+                }
+                transition={{ duration: 1.3, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.12 }}
+              >
+                <polygon
+                  points={`
+                    ${tip.x},${tip.y}
+                    ${tip.x + beamLen * Math.cos(Math.PI * 0.04)},${tip.y + beamLen * Math.sin(Math.PI * 0.04)}
+                    ${tip.x + beamLen * Math.cos(Math.PI * 0.26)},${tip.y + beamLen * Math.sin(Math.PI * 0.26)}
+                  `}
+                  fill="url(#beamGrad2)"
+                  opacity={0.7}
+                />
+              </motion.g>
+
+              {/* Halo pontual na ponta do farol */}
+              <motion.circle
+                cx={tip.x} cy={tip.y} r={18}
+                fill="rgba(201,168,76,0.35)"
+                initial={{ opacity: 0, r: 0 }}
+                animate={
+                  phase === 'sweep' || phase === 'reveal' || phase === 'stable'
+                    ? { opacity: 0.8, r: 14 }
+                    : { opacity: 0,   r: 0  }
+                }
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              />
+              <motion.circle
+                cx={tip.x} cy={tip.y} r={32}
+                fill="rgba(201,168,76,0.12)"
+                initial={{ opacity: 0, r: 0 }}
+                animate={
+                  phase === 'sweep' || phase === 'reveal' || phase === 'stable'
+                    ? { opacity: 1, r: 28 }
+                    : { opacity: 0, r: 0  }
+                }
+                transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </svg>
+          )}
+
+          {/* ── CANTOS DECORATIVOS ── */}
+          {(['tl','tr','bl','br'] as const).map((pos, i) => (
+            <motion.div key={pos} style={{
+              position: 'absolute',
+              ...(pos[0] === 't' ? { top: 28 } : { bottom: 28 }),
+              ...(pos[1] === 'l' ? { left: 28 } : { right: 28 }),
+              width: 34, height: 34,
+              borderTop:    pos[0] === 't' ? '1px solid rgba(201,168,76,0.45)' : undefined,
+              borderBottom: pos[0] === 'b' ? '1px solid rgba(201,168,76,0.45)' : undefined,
+              borderLeft:   pos[1] === 'l' ? '1px solid rgba(201,168,76,0.45)' : undefined,
+              borderRight:  pos[1] === 'r' ? '1px solid rgba(201,168,76,0.45)' : undefined,
+            }}
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{
-                opacity: phase === 'reveal' || phase === 'stable' ? 1 : 0,
-                scale: 1,
-              }}
-              transition={{ duration: 0.7, delay: 0.3 + i * 0.07, ease: [0.16,1,0.3,1] }}
+              animate={{ opacity: phase === 'reveal' || phase === 'stable' ? 1 : 0, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.3 + i * 0.07 }}
             />
           ))}
 
@@ -141,35 +209,13 @@ export default function Loader({ onComplete }: LoaderProps) {
             style={{ position: 'relative', zIndex: 2 }}
             initial={{ opacity: 0, filter: 'blur(6px)' }}
             animate={
-              phase === 'dark'   ? { opacity: 0,    filter: 'blur(6px)'  } :
-              phase === 'sweep'  ? { opacity: 0.55, filter: 'blur(2px)'  } :
-              phase === 'reveal' ? { opacity: 0.88, filter: 'blur(0.5px)'} :
-                                   { opacity: 1,    filter: 'blur(0px)'  }
+              phase === 'dark'   ? { opacity: 0,    filter: 'blur(6px)'   } :
+              phase === 'sweep'  ? { opacity: 0.55, filter: 'blur(2px)'   } :
+              phase === 'reveal' ? { opacity: 0.9,  filter: 'blur(0.4px)' } :
+                                   { opacity: 1,    filter: 'blur(0px)'   }
             }
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Halo dourado na ponta do farol */}
-            <motion.div
-              style={{
-                position: 'absolute',
-                // ponta do farol: x=19.4%, y=0.6% do elemento
-                top:  '0.6%',
-                left: '19.4%',
-                transform: 'translate(-50%, -50%)',
-                width: 80, height: 80,
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(201,168,76,0.55) 0%, rgba(201,168,76,0.15) 35%, transparent 70%)',
-                pointerEvents: 'none',
-              }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={
-                phase === 'sweep' || phase === 'reveal' || phase === 'stable'
-                  ? { scale: [0, 1.4, 1], opacity: [0, 0.9, 0.6] }
-                  : { scale: 0, opacity: 0 }
-              }
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], times: [0, 0.5, 1] }}
-            />
-
             <LogoPharol variant="full" size={360} onDark={false} />
           </motion.div>
 
@@ -178,17 +224,13 @@ export default function Loader({ onComplete }: LoaderProps) {
             style={{
               position: 'absolute', bottom: 56,
               display: 'flex', flexDirection: 'column',
-              alignItems: 'center', gap: 8,
+              alignItems: 'center', gap: 8, zIndex: 2,
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: phase === 'reveal' || phase === 'stable' ? 1 : 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div style={{
-              width: 160, height: 1,
-              background: 'rgba(27,43,107,0.1)',
-              position: 'relative', overflow: 'hidden',
-            }}>
+            <div style={{ width: 160, height: 1, background: 'rgba(27,43,107,0.1)', position: 'relative', overflow: 'hidden' }}>
               <motion.div
                 style={{
                   position: 'absolute', top: 0, left: 0,
@@ -202,10 +244,8 @@ export default function Loader({ onComplete }: LoaderProps) {
             <motion.span
               style={{
                 fontFamily: 'var(--font-montserrat), sans-serif',
-                fontSize: '0.47rem',
-                letterSpacing: '0.4em',
-                textTransform: 'uppercase',
-                color: 'rgba(27,43,107,0.28)',
+                fontSize: '0.47rem', letterSpacing: '0.4em',
+                textTransform: 'uppercase', color: 'rgba(27,43,107,0.28)',
               }}
               animate={{ opacity: [0.35, 0.75, 0.35] }}
               transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
