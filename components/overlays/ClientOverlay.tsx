@@ -13,8 +13,8 @@ function ReservCard({ title, subtitle, status, type, onCancel }: {
 }) {
   const colors = {
     confirmed: { bg: 'rgba(27,43,107,0.1)', color: 'var(--navy)' },
-    pending: { bg: 'rgba(201,168,76,0.25)', color: 'var(--gold-dark)' },
-    cancelled: { bg: 'rgba(200,16,46,0.15)', color: 'var(--red-dark)' }
+    pending:   { bg: 'rgba(201,168,76,0.25)', color: 'var(--gold-dark)' },
+    cancelled: { bg: 'rgba(200,16,46,0.15)', color: 'var(--red-dark)' },
   }
   return (
     <div style={{ background: 'white', border: '1px solid var(--cream-dark)', padding: 16 }}>
@@ -61,11 +61,13 @@ function NewReserveForm({ onBack }: { onBack: () => void }) {
   const [obs, setObs] = useState('')
   const inp: React.CSSProperties = { width: '100%', padding: '10px 14px', border: '1px solid var(--cream-dark)', background: 'white', marginTop: 6, fontSize: '0.9rem' }
   const lbl: React.CSSProperties = { fontSize: '0.58rem', color: 'var(--gold)', textTransform: 'uppercase' as const, letterSpacing: '0.18em', fontFamily: 'var(--font-montserrat), sans-serif' }
+
   const handleSubmit = () => {
     const msg = encodeURIComponent(`*Reserva — Área do Cliente*\n\n📅 ${data} · ${hora} · ${pessoas}\n🪑 ${mesa}\n🥩 Carne: ${pontoCarne} · Massa: ${massas}${obs ? `\n📝 ${obs}` : ''}`)
     window.open(`https://wa.me/554733673800?text=${msg}`, '_blank')
     onBack()
   }
+
   return (
     <div style={{ background: 'white', border: '1px solid var(--cream-dark)', padding: 24 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
@@ -104,7 +106,7 @@ function NewReserveForm({ onBack }: { onBack: () => void }) {
 }
 
 function QueueInline() {
-  const [qScreen, setQScreen] = useState<'cta'|'waiting'>('cta')
+  const [qScreen, setQScreen] = useState<'cta' | 'waiting'>('cta')
   const [ahead] = useState(3)
   const myNumber = 7
   return (
@@ -151,6 +153,7 @@ function QueueInline() {
 export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
   const [screen, setScreen] = useState<'auth' | 'dashboard'>('auth')
   const [isRegister, setIsRegister] = useState(false)
+  const [termosAceitos, setTermosAceitos] = useState(false)
   const [consentimento, setConsentimento] = useState(false)
   const [tab, setTab] = useState('reservas')
   const [rating, setRating] = useState(0)
@@ -167,11 +170,14 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
             <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.3rem', color: 'var(--navy)' }}>Área do Cliente</div>
             <button onClick={onClose} style={{ background: 'transparent', border: 'none', fontSize: '1.3rem', cursor: 'pointer', color: 'var(--text-light)' }}>✕</button>
           </div>
+
           <div className="container" style={{ maxWidth: 980, paddingBlock: 28 }}>
             {screen === 'auth' ? (
               <div style={{ maxWidth: 460, margin: '0 auto', background: 'white', border: '1px solid var(--cream-dark)', padding: 28 }}>
                 <h2 style={{ margin: 0, fontFamily: 'var(--font-playfair), serif', color: 'var(--navy)' }}>Bem-vindo</h2>
                 <p style={{ color: 'var(--text-mid)', marginBottom: 20 }}>Entre na sua conta O Pharol</p>
+
+                {/* Campos */}
                 <div style={{ display: 'grid', gap: 12 }}>
                   {isRegister && <input placeholder="Nome Completo" style={inp} />}
                   <input placeholder="E-mail" style={inp} />
@@ -179,12 +185,52 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
                   {isRegister && <input placeholder="CPF" style={inp} />}
                   <input placeholder="Senha" type="password" style={inp} />
                 </div>
+
+                {/* Box informativo */}
                 {isRegister && (
                   <div style={{ marginTop: 14, padding: '14px 16px', background: 'rgba(201,168,76,0.06)', border: '1px solid rgba(201,168,76,0.2)', fontSize: '0.78rem', color: 'var(--text-mid)', lineHeight: 1.6 }}>
                     🎁 Ao criar sua conta, você poderá personalizar seus pratos, acompanhar pontos de fidelidade e participar dos sorteios semanais dos nossos parceiros.
                   </div>
                 )}
-                {/* ── Box de consentimento CRM — só aparece no cadastro ── */}
+
+                {/* ── Opt-in OBRIGATÓRIO — comunicações da casa ── */}
+                {isRegister && (
+                  <div
+                    onClick={() => setTermosAceitos(v => !v)}
+                    style={{
+                      marginTop: 14, padding: '16px 18px', cursor: 'pointer',
+                      background: termosAceitos ? 'rgba(27,43,107,0.05)' : 'rgba(27,43,107,0.02)',
+                      border: `1px solid ${termosAceitos ? 'rgba(27,43,107,0.3)' : 'var(--cream-dark)'}`,
+                      display: 'flex', gap: 14, alignItems: 'flex-start',
+                      transition: 'all 0.3s',
+                    }}
+                  >
+                    <div style={{
+                      width: 20, height: 20,
+                      border: `2px solid ${termosAceitos ? 'var(--navy)' : 'var(--cream-dark)'}`,
+                      background: termosAceitos ? 'var(--navy)' : 'transparent',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      flexShrink: 0, marginTop: 2, transition: 'all 0.25s',
+                    }}>
+                      {termosAceitos && (
+                        <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+                          <path d="M1 4L4 7.5L10 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--navy)', letterSpacing: '0.04em', marginBottom: 4 }}>
+                        Aceito receber comunicações de O Pharol{' '}
+                        <span style={{ color: 'var(--gold-dark)' }}>*</span>
+                      </div>
+                      <div style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '0.92rem', fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: 1.55 }}>
+                        Autorizo O Pharol a entrar em contato por WhatsApp e e-mail para confirmações de reserva, atualizações de fila, novidades do cardápio e ofertas exclusivas para clientes da casa.
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Opt-in OPCIONAL — CRM / parceiros ── */}
                 {isRegister && (
                   <div
                     onClick={() => setConsentimento(v => !v)}
@@ -197,12 +243,17 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
                     }}
                   >
                     <div style={{
-                      width: 20, height: 20, border: `2px solid ${consentimento ? 'var(--gold)' : 'var(--cream-dark)'}`,
+                      width: 20, height: 20,
+                      border: `2px solid ${consentimento ? 'var(--gold)' : 'var(--cream-dark)'}`,
                       background: consentimento ? 'var(--gold)' : 'transparent',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       flexShrink: 0, marginTop: 2, transition: 'all 0.25s',
                     }}>
-                      {consentimento && <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="var(--navy-deep)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                      {consentimento && (
+                        <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+                          <path d="M1 4L4 7.5L10 1" stroke="var(--navy-deep)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
                     </div>
                     <div>
                       <div style={{ fontSize: '0.72rem', fontWeight: 600, color: consentimento ? 'var(--gold-dark)' : 'var(--navy)', letterSpacing: '0.04em', marginBottom: 4 }}>
@@ -216,10 +267,25 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
                     </div>
                   </div>
                 )}
-                <button className="btn-primary" style={{ width: '100%', marginTop: 16 }} onClick={() => setScreen('dashboard')}>{isRegister ? 'Criar Conta' : 'Entrar'}</button>
+
+                {/* Botão principal — bloqueado até termos aceitos */}
+                <button
+                  className="btn-primary"
+                  style={{
+                    width: '100%', marginTop: 16,
+                    opacity: isRegister && !termosAceitos ? 0.45 : 1,
+                    cursor: isRegister && !termosAceitos ? 'not-allowed' : 'pointer',
+                  }}
+                  onClick={() => { if (isRegister && !termosAceitos) return; setScreen('dashboard') }}
+                >
+                  {isRegister ? 'Criar Conta' : 'Entrar'}
+                </button>
+
                 <p style={{ textAlign: 'center', color: 'var(--text-mid)', fontSize: '0.85rem', marginTop: 14 }}>
                   {isRegister ? 'Já tem conta? ' : 'Não tem conta? '}
-                  <button onClick={() => setIsRegister(v => !v)} style={{ border: 'none', background: 'transparent', color: 'var(--navy)', cursor: 'pointer', fontWeight: 600 }}>{isRegister ? 'Entrar' : 'Cadastre-se'}</button>
+                  <button onClick={() => setIsRegister(v => !v)} style={{ border: 'none', background: 'transparent', color: 'var(--navy)', cursor: 'pointer', fontWeight: 600 }}>
+                    {isRegister ? 'Entrar' : 'Cadastre-se'}
+                  </button>
                 </p>
               </div>
             ) : (
@@ -234,6 +300,7 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
                     <span style={{ fontSize: '0.62rem', color: 'var(--text-mid)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>pts</span>
                   </div>
                 </div>
+
                 <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid var(--cream-dark)', marginBottom: 24, overflowX: 'auto' }}>
                   {[{id:'reservas',label:'Reservas'},{id:'fila',label:'Fila Virtual'},{id:'historico',label:'Histórico'},{id:'fidelidade',label:'Fidelidade'},{id:'avaliacoes',label:'Avaliações'}].map(t => (
                     <button key={t.id} onClick={() => { setTab(t.id); setShowNewReserve(false) }} style={{ border: 'none', background: 'transparent', padding: '10px 16px', color: tab === t.id ? 'var(--navy)' : 'var(--text-light)', fontWeight: tab === t.id ? 600 : 400, cursor: 'pointer', whiteSpace: 'nowrap', borderBottom: tab === t.id ? '2px solid var(--gold)' : '2px solid transparent', transition: 'all 0.2s' }}>{t.label}</button>
@@ -256,7 +323,9 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
                     )}
                   </div>
                 )}
+
                 {tab === 'fila' && <QueueInline />}
+
                 {tab === 'historico' && (
                   <div>
                     <div style={{ background: 'rgba(201,168,76,0.06)', border: '1px solid rgba(201,168,76,0.15)', padding: '14px 18px', marginBottom: 16, fontSize: '0.8rem', color: 'var(--text-mid)' }}>
@@ -275,6 +344,7 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
                     </div>
                   </div>
                 )}
+
                 {tab === 'fidelidade' && (
                   <div style={{ display: 'grid', gap: 16 }}>
                     <div style={{ background: 'linear-gradient(135deg, var(--navy-deep), var(--navy))', color: 'white', padding: 24 }}>
@@ -282,26 +352,41 @@ export default function ClientOverlay({ open, onClose }: ClientOverlayProps) {
                       <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '2.8rem', color: 'var(--gold)', lineHeight: 1 }}>{totalPoints}</div>
                       <div style={{ marginBottom: 14, color: 'rgba(255,255,255,0.6)' }}>pontos acumulados · faltam {nextLevel - totalPoints} para o próximo nível</div>
                       <div style={{ height: 8, background: 'rgba(255,255,255,0.15)' }}>
-                        <motion.div animate={{ width: `${(totalPoints/nextLevel)*100}%` }} transition={{ duration: 1.2, delay: 0.3 }} style={{ height: '100%', background: 'linear-gradient(90deg, var(--gold-dark), var(--gold))' }} />
+                        <motion.div animate={{ width: `${(totalPoints / nextLevel) * 100}%` }} transition={{ duration: 1.2, delay: 0.3 }} style={{ height: '100%', background: 'linear-gradient(90deg, var(--gold-dark), var(--gold))' }} />
                       </div>
                     </div>
                     <div style={{ background: 'white', border: '1px solid var(--cream-dark)', padding: 20, display: 'grid', gap: 10 }}>
-                      {[{pts:500,label:'Entrada para 1 pessoa',done:true},{pts:1000,label:'Sobremesa especial',done:true},{pts:1500,label:'Garrafa de vinho selecionado',done:false},{pts:3000,label:'Jantar para 2 pessoas',done:false},{pts:5000,label:'Experiência VIP — Chef\'s Table',done:false}].map(({pts,label,done}) => (
+                      {[
+                        { pts: 500,  label: 'Entrada para 1 pessoa',        done: true  },
+                        { pts: 1000, label: 'Sobremesa especial',            done: true  },
+                        { pts: 1500, label: 'Garrafa de vinho selecionado',  done: false },
+                        { pts: 3000, label: 'Jantar para 2 pessoas',         done: false },
+                        { pts: 5000, label: "Experiência VIP — Chef's Table", done: false },
+                      ].map(({ pts, label, done }) => (
                         <div key={pts} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid var(--cream-dark)', opacity: done ? 1 : 0.65 }}>
-                          <div><div style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--navy)' }}>{label}</div><div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>{pts} pontos</div></div>
-                          {done ? <span style={{ background: 'rgba(27,43,107,0.1)', color: 'var(--navy)', padding: '5px 12px', fontSize: '0.65rem' }}>Disponível</span> : <span style={{ color: 'var(--text-light)', fontSize: '0.7rem' }}>Faltam {pts - totalPoints} pts</span>}
+                          <div>
+                            <div style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--navy)' }}>{label}</div>
+                            <div style={{ fontSize: '0.7rem', color: 'var(--text-light)' }}>{pts} pontos</div>
+                          </div>
+                          {done
+                            ? <span style={{ background: 'rgba(27,43,107,0.1)', color: 'var(--navy)', padding: '5px 12px', fontSize: '0.65rem' }}>Disponível</span>
+                            : <span style={{ color: 'var(--text-light)', fontSize: '0.7rem' }}>Faltam {pts - totalPoints} pts</span>
+                          }
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
+
                 {tab === 'avaliacoes' && (
                   <div style={{ background: 'white', border: '1px solid var(--cream-dark)', padding: 24 }}>
                     <div style={{ color: 'var(--gold)', fontSize: '0.58rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 10 }}>Avalie sua última visita</div>
                     <div style={{ color: 'var(--text-mid)', marginBottom: 14, fontSize: '0.85rem' }}>14 de Fevereiro, 2025</div>
                     <div style={{ display: 'flex', gap: 8, fontSize: '2rem', marginBottom: 18 }}>
-                      {Array.from({length:5}).map((_,i) => (
-                        <button key={i} onClick={() => setRating(i+1)} style={{ border: 'none', background: 'transparent', color: i < rating ? 'var(--gold)' : 'var(--text-light)', cursor: 'pointer', fontSize: '1.8rem' }}>{i < rating ? '★' : '☆'}</button>
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <button key={i} onClick={() => setRating(i + 1)} style={{ border: 'none', background: 'transparent', color: i < rating ? 'var(--gold)' : 'var(--text-light)', cursor: 'pointer', fontSize: '1.8rem' }}>
+                          {i < rating ? '★' : '☆'}
+                        </button>
                       ))}
                     </div>
                     <textarea placeholder="Como foi sua experiência?" style={{ width: '100%', minHeight: 90, padding: '10px 14px', border: '1px solid var(--cream-dark)' }} />

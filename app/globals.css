@@ -160,8 +160,16 @@ input, select, textarea, button { font-family: inherit; outline: none; }
   align-items: stretch;
 }
 
+/* Separadores entre items no desktop */
+.credentials-grid > div:not(:last-child) {
+  border-right: 1px solid rgba(201,168,76,0.09);
+}
+
 @media (max-width: 900px) {
   .credentials-grid { grid-template-columns: repeat(3, 1fr); }
+  /* Remove separadores inline no modo responsivo */
+  .credentials-grid > div:not(:last-child) { border-right: none; }
+  .credentials-grid > div { border-bottom: 1px solid rgba(201,168,76,0.09); }
 }
 @media (max-width: 600px) {
   .credentials-grid { grid-template-columns: repeat(2, 1fr); }

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import LighthouseSVG from './ui/LighthouseSVG'
+import LogoPharol from './ui/LogoPharol'
 
 type LoaderProps = {
   onComplete: () => void
@@ -11,7 +11,6 @@ type LoaderProps = {
 export default function Loader({ onComplete }: LoaderProps) {
   const [progress, setProgress] = useState(0)
   const [visible, setVisible] = useState(true)
-  // Ref para guardar o callback sem ele entrar nas deps do useEffect
   const onCompleteRef = useRef(onComplete)
   onCompleteRef.current = onComplete
 
@@ -21,14 +20,13 @@ export default function Loader({ onComplete }: LoaderProps) {
     const t3 = setTimeout(() => setProgress(100), 2400)
     const tDone = setTimeout(() => {
       setVisible(false)
-      // Pequeno delay para a animação de saída terminar antes de montar o site
       setTimeout(() => onCompleteRef.current(), 700)
     }, 2800)
     return () => {
       clearTimeout(t1); clearTimeout(t2)
       clearTimeout(t3); clearTimeout(tDone)
     }
-  }, []) // roda exatamente uma vez
+  }, [])
 
   return (
     <AnimatePresence>
@@ -36,36 +34,40 @@ export default function Loader({ onComplete }: LoaderProps) {
         <motion.div
           style={{
             position: 'fixed', inset: 0,
-            background: 'var(--navy-deep)',
+            background: 'var(--cream)',
             zIndex: 9999,
-            display: 'grid', placeItems: 'center',
-            color: 'var(--cream)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
           exit={{ opacity: 0, scale: 0.98 }}
           transition={{ duration: 0.7, ease: 'easeInOut' }}
         >
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ position: 'relative', width: 140, margin: '0 auto 28px' }}>
-              <LighthouseSVG size={120} showBeam animated />
-            </div>
+          {/* Cantos decorativos dourados */}
+          <div style={{ position: 'absolute', top: 28, left: 28, width: 40, height: 40, borderTop: '1px solid rgba(201,168,76,0.35)', borderLeft: '1px solid rgba(201,168,76,0.35)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: 28, right: 28, width: 40, height: 40, borderTop: '1px solid rgba(201,168,76,0.35)', borderRight: '1px solid rgba(201,168,76,0.35)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: 28, left: 28, width: 40, height: 40, borderBottom: '1px solid rgba(201,168,76,0.35)', borderLeft: '1px solid rgba(201,168,76,0.35)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: 28, right: 28, width: 40, height: 40, borderBottom: '1px solid rgba(201,168,76,0.35)', borderRight: '1px solid rgba(201,168,76,0.35)', pointerEvents: 'none' }} />
 
-            <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
-              style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.4rem', letterSpacing: '0.3em', textTransform: 'uppercase' }}
-            >
-              O PHAROL
-            </motion.div>
+          {/* Logo oficial — farol + raios + texto lado a lado */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          >
+            <LogoPharol variant="full" size={380} onDark={false} />
+          </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.7 }}
-              style={{ fontFamily: 'var(--font-great-vibes), cursive', color: 'var(--gold)', fontSize: '1.4rem', marginTop: 8 }}
-            >
-              Restaurante Gourmet
-            </motion.div>
-
-            <div style={{ width: 220, height: 1, background: 'rgba(255,255,255,0.12)', margin: '24px auto 0' }}>
+          {/* Barra de progresso */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            style={{ marginTop: 44, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
+          >
+            <div style={{ width: 200, height: 1, background: 'rgba(27,43,107,0.12)' }}>
               <motion.div
                 style={{ height: '100%', background: 'linear-gradient(90deg, transparent, var(--gold), transparent)' }}
                 animate={{ width: `${progress}%` }}
@@ -73,7 +75,16 @@ export default function Loader({ onComplete }: LoaderProps) {
                 transition={{ duration: 0.6, ease: 'easeInOut' }}
               />
             </div>
-          </div>
+            <div style={{
+              fontFamily: 'var(--font-montserrat), sans-serif',
+              fontSize: '0.5rem',
+              letterSpacing: '0.35em',
+              textTransform: 'uppercase',
+              color: 'rgba(27,43,107,0.3)',
+            }}>
+              Carregando
+            </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

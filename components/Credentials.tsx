@@ -74,7 +74,8 @@ export default function Credentials() {
         style={{ position: 'absolute', top: 0, left: 0, width: '25%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.035), transparent)', pointerEvents: 'none' }}
       />
 
-      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(5,1fr)' }}>
+      {/* Usa a classe CSS responsiva definida em globals.css */}
+      <div className="credentials-grid" style={{ maxWidth: 1280, margin: '0 auto' }}>
         {items.map(({ ref, Icon, big, unit, sub }, i) => (
           <motion.div
             key={i}
@@ -86,7 +87,6 @@ export default function Credentials() {
             style={{
               display: 'flex', alignItems: 'center', gap: 14,
               padding: '22px 28px',
-              borderRight: i < 4 ? '1px solid rgba(201,168,76,0.09)' : 'none',
               position: 'relative',
             }}
           >

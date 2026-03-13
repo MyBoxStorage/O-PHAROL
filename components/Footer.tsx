@@ -163,7 +163,7 @@ export default function Footer({ onReserve, onQueue, onClientArea, onAdmin }: Fo
 
         {/* Bottom bar */}
         <div className="footer-bottom" style={{ marginTop: 56, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', gap: 16, justifyContent: 'space-between', flexWrap: 'wrap', fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)' }}>
-          <div>© 2024 O Pharol Restaurante Gourmet LTDA · CNPJ 18.618.919/0001-09</div>
+          <div>© 2025 O Pharol Restaurante Gourmet LTDA · CNPJ 18.618.919/0001-09</div>
           <div className="footer-bottom-links" style={{ display: 'flex', gap: 16 }}>
             <a href="#" style={{ color: 'rgba(255,255,255,0.3)', transition: 'color 0.3s' }}
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--gold)')}

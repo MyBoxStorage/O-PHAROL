@@ -8,6 +8,15 @@ type AdminOverlayProps = {
   onClose: () => void
 }
 
+/* Formata a data atual em pt-BR */
+function todayLabel() {
+  return new Date().toLocaleDateString('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
 export default function AdminOverlay({ open, onClose }: AdminOverlayProps) {
   const [panel, setPanel] = useState('dashboard')
 
@@ -45,7 +54,7 @@ export default function AdminOverlay({ open, onClose }: AdminOverlayProps) {
               {panel === 'dashboard' && (
                 <div>
                   <h2 style={{ margin: 0, fontFamily: 'var(--font-playfair), serif', color: 'var(--navy)' }}>Dashboard</h2>
-                  <p style={{ color: 'var(--text-mid)' }}>Visão geral de hoje — 8 de março de 2026</p>
+                  <p style={{ color: 'var(--text-mid)' }}>Visão geral de hoje — {todayLabel()}</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
                     {[
                       ['Reservas Hoje', '24', '↑ +6 vs ontem'],

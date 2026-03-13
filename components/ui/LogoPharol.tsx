@@ -1,15 +1,14 @@
 'use client'
 
 /**
- * LogoPharol — Logo fiel ao original O Pharol Restaurante Gourmet
+ * LogoPharol — Logo oficial O Pharol Restaurante Gourmet
+ * Coordenadas copiadas diretamente do preview3.html aprovado.
  *
- * A cor padrão é AZUL NAVY (#1B2B6B) — igual ao logo real.
- * Use onDark=true apenas para fundos escuros (navbar, footer navy).
+ * onDark=false → farol navy + corpo branco (fundos claros)
+ * onDark=true  → farol branco semiopaco + corpo transparente (fundos escuros)
  */
 type LogoPharolProps = {
   size?: number
-  /** onDark=true → farol branco c/ listras douradas, textos branco+dourado (para fundos escuros)
-   *  onDark=false (padrão) → tudo em azul navy (#1B2B6B), igual ao logo original */
   onDark?: boolean
   variant?: 'full' | 'navbar'
 }
@@ -19,135 +18,239 @@ export default function LogoPharol({
   onDark = false,
   variant = 'full',
 }: LogoPharolProps) {
-  // Paleta AZUL (padrão — logo original)
-  const NAVY   = '#1B2B6B'
-  const GOLD   = '#C9A84C'
-  const WHITE  = '#FFFFFF'
+  const NAVY  = '#1B2B6B'
+  const WHITE = '#FFFFFF'
 
-  // Cores baseadas no contexto
-  const stripe   = onDark ? GOLD   : NAVY   // listras do farol
-  const body     = onDark ? WHITE  : WHITE  // interior do farol (sempre branco)
-  const txtMain  = onDark ? WHITE  : NAVY   // "O PHAROL"
-  const txtSub   = onDark ? 'rgba(255,255,255,0.7)' : NAVY  // "RESTAURANTE"
-  const txtScr   = onDark ? GOLD   : NAVY   // "Gourmet"
-  const rays     = onDark ? 'rgba(255,255,255,0.5)' : NAVY
-  const divider  = onDark ? `rgba(201,168,76,0.55)` : `rgba(27,43,107,0.4)`
+  // Farol: onDark=false → navy + branco | onDark=true → branco semiopaco + transparente
+  const stripe  = onDark ? 'rgba(255,255,255,0.82)' : NAVY
+  const body    = onDark ? 'transparent'            : WHITE
 
-  if (variant === 'navbar') {
+  // Textos e raios adaptam ao fundo
+  const txtMain = onDark ? WHITE                    : NAVY
+  const txtSub  = onDark ? 'rgba(255,255,255,0.75)' : NAVY
+  const rays    = onDark ? 'rgba(255,255,255,0.55)' : NAVY
+  const divider = onDark ? 'rgba(201,168,76,0.5)'   : 'rgba(27,43,107,0.4)'
+
+  /* ─────────────────────────────────────────────────────────────
+     FULL — logo oficial
+     ViewBox: 420 × 262  (copiado do preview3.html aprovado)
+  ───────────────────────────────────────────────────────────── */
+  if (variant === 'full') {
     return (
-      <svg viewBox="0 0 310 84" width={size} height={Math.round(size * 84 / 310)}
-        xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
-        <Lighthouse ox={2} oy={2} sc={0.34} body={body} stripe={stripe} />
-        <text x="106" y="33" fontFamily="'Playfair Display',Georgia,serif"
-          fontSize="22" fontWeight="700" letterSpacing="4" fill={txtMain}>O PHAROL</text>
-        <text x="108" y="49" fontFamily="'Montserrat',Arial,sans-serif"
-          fontSize="7.5" fontWeight="500" letterSpacing="4" fill={txtSub}>RESTAURANTE</text>
-        <line x1="108" y1="55" x2="302" y2="55" stroke={divider} strokeWidth="0.6" />
-        <text x="128" y="71" fontFamily="'Great Vibes',cursive"
-          fontSize="20" fill={txtScr}>Gourmet</text>
+      <svg
+        viewBox="0 0 420 262"
+        width={size}
+        height={Math.round(size * 262 / 420)}
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ display: 'block' }}
+      >
+        <defs>
+          <clipPath id="lhc-full">
+            <polygon points="28.9,217.9 133.9,217.9 112.9,75.1 49.9,75.1"/>
+          </clipPath>
+          {/* Máscara retangular — corta raios na área do texto */}
+          <mask id="rm-full">
+            <rect x="0" y="0" width="420" height="262" fill="white"/>
+            <rect x="180.8" y="111.2" width="243.2" height="46.0" fill="black"/>
+          </mask>
+        </defs>
+
+        {/* ── FAROL ── */}
+        <polygon points="28.9,217.9 133.9,217.9 112.9,75.1 49.9,75.1" fill={body}/>
+
+        {/* Listras diagonais */}
+        <polygon points="-21.4,217.9 4.6,217.9 203.5,4.8 177.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="4.6,217.9 30.6,217.9 229.5,4.8 203.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="30.6,217.9 56.6,217.9 255.5,4.8 229.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="56.6,217.9 82.6,217.9 281.5,4.8 255.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="82.6,217.9 108.6,217.9 307.5,4.8 281.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="108.6,217.9 134.6,217.9 333.5,4.8 307.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="134.6,217.9 160.6,217.9 359.5,4.8 333.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="160.6,217.9 186.6,217.9 385.5,4.8 359.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+        <polygon points="186.6,217.9 212.6,217.9 411.5,4.8 385.5,4.8" fill={stripe} clipPath="url(#lhc-full)"/>
+
+        {/* Contorno torre */}
+        <polygon points="28.9,217.9 133.9,217.9 112.9,75.1 49.9,75.1" fill="none" stroke={stripe} strokeWidth="2.1" strokeLinejoin="round"/>
+
+        {/* Plataforma intermediária */}
+        <rect x="22.6" y="165.4" width="117.6" height="6.3" fill={stripe}/>
+        <rect x="24.7" y="153.8" width="113.4" height="2.6" fill={stripe}/>
+        <rect x="26.8"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="34.2"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="41.5"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="48.9"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="56.2"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="63.6"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="70.9"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="78.2"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="85.6"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="93.0"  y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="100.3" y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="107.7" y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="115.0" y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="122.4" y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="129.7" y="153.8" width="1.89" height="11.6" fill={stripe}/>
+        <rect x="24.7" y="170.7" width="113.4" height="2.1" fill={stripe}/>
+
+        {/* Varanda superior */}
+        <rect x="41.5" y="73.0" width="79.8" height="4.2" fill={stripe}/>
+        <rect x="43.6" y="62.5" width="75.6" height="2.1" fill={stripe}/>
+        <rect x="45.7"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="51.8"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="57.9"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="64.0"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="70.1"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="76.2"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="82.3"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="88.4"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="94.5"  y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="100.6" y="62.5" width="1.47" height="10.5" fill={stripe}/>
+        <rect x="106.7" y="62.5" width="1.47" height="10.5" fill={stripe}/>
+
+        {/* Base alvenaria */}
+        <rect x="16.3" y="235.8" width="130.2" height="7.4" fill={stripe} rx="0.53"/>
+        <rect x="16.3" y="225.3" width="30.5"  height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="48.9" y="225.3" width="31.5"  height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="82.5" y="225.3" width="31.5"  height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="116.1" y="225.3" width="28.4" height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="16.3" y="214.8" width="22.1"  height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="40.5" y="214.8" width="29.4"  height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="72.0" y="214.8" width="29.4"  height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="103.5" y="214.8" width="29.4" height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="135.0" y="214.8" width="11.5" height="10.5" fill={stripe} stroke={body} strokeWidth="0.74"/>
+        <rect x="12.1" y="243.2" width="138.6" height="5.3" fill={stripe} rx="0.53"/>
+
+        {/* Cúpula */}
+        <rect x="45.7" y="41.5" width="71.4" height="31.5" fill={body} stroke={stripe} strokeWidth="1.89"/>
+        <line x1="63.6"  y1="41.5" x2="63.6"  y2="73.0" stroke={stripe} strokeWidth="1.58"/>
+        <line x1="75.1"  y1="41.5" x2="75.1"  y2="73.0" stroke={stripe} strokeWidth="1.58"/>
+        <line x1="86.7"  y1="41.5" x2="86.7"  y2="73.0" stroke={stripe} strokeWidth="1.58"/>
+        <line x1="98.2"  y1="41.5" x2="98.2"  y2="73.0" stroke={stripe} strokeWidth="1.58"/>
+        <line x1="45.7"  y1="57.2" x2="117.1" y2="57.2" stroke={stripe} strokeWidth="1.37"/>
+        <path d={`M 38.4 43.6 Q 81.4 13.1 124.4 43.6 Z`} fill={stripe}/>
+        <circle cx="81.4" cy="17.4" r="5.3" fill={stripe}/>
+        <line x1="81.4" y1="12.1" x2="81.4" y2="10.0" stroke={stripe} strokeWidth="2.1"/>
+        <polygon points="81.4,10.0 93.9,5.8 81.4,1.6" fill={stripe}/>
+
+        {/* ── RAIOS — coordenadas copiadas do preview3.html ── */}
+        <g mask="url(#rm-full)" opacity={0.75}>
+          <line x1="302.4" y1="73.2"  x2="302.4" y2="51.2"  stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="315.7" y1="74.5"  x2="317.6" y2="64.7"  stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="328.4" y1="78.4"  x2="336.8" y2="58.0"  stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="340.2" y1="84.6"  x2="345.7" y2="76.3"  stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="350.5" y1="93.1"  x2="366.0" y2="77.5"  stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="358.9" y1="103.4" x2="367.3" y2="97.8"  stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="365.2" y1="115.2" x2="385.5" y2="106.7" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="369.1" y1="127.9" x2="378.9" y2="126.0" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="370.4" y1="141.2" x2="392.4" y2="141.2" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="369.1" y1="154.4" x2="378.9" y2="156.4" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="365.2" y1="167.2" x2="385.5" y2="175.6" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="358.9" y1="179.0" x2="367.3" y2="184.5" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="350.5" y1="189.3" x2="366.0" y2="204.8" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="340.2" y1="197.7" x2="345.7" y2="206.0" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="328.4" y1="204.0" x2="336.8" y2="224.3" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="315.7" y1="207.9" x2="317.6" y2="217.7" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="302.4" y1="209.2" x2="302.4" y2="231.2" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="289.1" y1="207.9" x2="287.2" y2="217.7" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="276.4" y1="204.0" x2="268.0" y2="224.3" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="264.6" y1="197.7" x2="259.1" y2="206.0" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="254.3" y1="189.3" x2="238.8" y2="204.8" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="245.9" y1="179.0" x2="237.5" y2="184.5" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="239.6" y1="167.2" x2="219.3" y2="175.6" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="235.7" y1="154.4" x2="225.9" y2="156.4" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="234.4" y1="141.2" x2="212.4" y2="141.2" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="235.7" y1="127.9" x2="225.9" y2="126.0" stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="239.6" y1="115.2" x2="219.3" y2="106.7" stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="245.9" y1="103.4" x2="237.5" y2="97.8"  stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="254.3" y1="93.1"  x2="238.8" y2="77.5"  stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="264.6" y1="84.6"  x2="259.1" y2="76.3"  stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+          <line x1="276.4" y1="78.4"  x2="268.0" y2="58.0"  stroke={rays} strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="289.1" y1="74.5"  x2="287.2" y2="64.7"  stroke={rays} strokeWidth="0.9" strokeLinecap="round"/>
+        </g>
+
+        {/* ── TEXTO ── */}
+        <text x="302.4" y="139.2" textAnchor="middle"
+          fontFamily="'Playfair Display',Georgia,serif"
+          fontSize="30" fontWeight="700" letterSpacing="3"
+          fill={txtMain}>O PHAROL</text>
+        <line x1="240.4" y1="148.2" x2="364.4" y2="148.2" stroke={divider} strokeWidth="0.8"/>
+        <text x="302.4" y="163.2" textAnchor="middle"
+          fontFamily="'Montserrat',Arial,sans-serif"
+          fontSize="8" fontWeight="500" letterSpacing="5"
+          fill={txtSub}>RESTAURANTE</text>
       </svg>
     )
   }
 
-  // Versão full com raios
-  return (
-    <svg viewBox="0 0 480 300" width={size} height={Math.round(size * 300 / 480)}
-      xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
-      <Lighthouse ox={10} oy={10} sc={1.2} body={body} stripe={stripe} />
-      <Rays cx={318} cy={145} color={rays} />
-      <text x="318" y="130" textAnchor="middle" fontFamily="'Playfair Display',Georgia,serif"
-        fontSize="40" fontWeight="700" letterSpacing="3" fill={txtMain}>O PHAROL</text>
-      <text x="318" y="153" textAnchor="middle" fontFamily="'Montserrat',Arial,sans-serif"
-        fontSize="10.5" fontWeight="500" letterSpacing="6" fill={txtSub}>RESTAURANTE</text>
-      <line x1="228" y1="161" x2="408" y2="161" stroke={divider} strokeWidth="0.8" />
-      <text x="318" y="194" textAnchor="middle" fontFamily="'Great Vibes',cursive"
-        fontSize="36" fill={txtScr}>Gourmet</text>
-    </svg>
-  )
-}
+  /* ─────────────────────────────────────────────
+     NAVBAR — horizontal compacta, sem raios
+     ViewBox: 310 × 84
+  ───────────────────────────────────────────── */
+  const nSc = 0.34
+  const nOx = 2
+  const nOy = 2
+  const nfx = (v: number) => nOx + v * nSc
+  const nfy = (v: number) => nOy + v * nSc
+  const nfs = (v: number) => v * nSc
 
-/* Raios sun-burst */
-function Rays({ cx, cy, color }: { cx: number; cy: number; color: string }) {
-  return (
-    <g>
-      {Array.from({ length: 32 }).map((_, i) => {
-        const ang = (i * 360) / 32
-        const main = i % 2 === 0
-        const rad = ((ang - 90) * Math.PI) / 180
-        return (
-          <line key={i}
-            x1={cx + 66 * Math.cos(rad)} y1={cy + 66 * Math.sin(rad)}
-            x2={cx + (main ? 86 : 74) * Math.cos(rad)} y2={cy + (main ? 86 : 74) * Math.sin(rad)}
-            stroke={color} strokeWidth={main ? 1.7 : 1.1} strokeLinecap="round" />
-        )
-      })}
-    </g>
-  )
-}
-
-/* Farol fiel ao logo original */
-function Lighthouse({ ox, oy, sc: S, body, stripe }:
-  { ox: number; oy: number; sc: number; body: string; stripe: string }) {
-  const x = (v: number) => ox + v * S
-  const y = (v: number) => oy + v * S
-  const s = (v: number) => v * S
-  const p = (...c: [number,number][]) => c.map(([a,b]) => `${x(a)},${y(b)}`).join(' ')
-  const id = `lhc${Math.round(ox * 100)}`
+  const navPts = [[18,198],[118,198],[98,62],[38,62]]
+    .map(([a,b]) => `${nfx(a).toFixed(1)},${nfy(b).toFixed(1)}`).join(' ')
 
   return (
-    <g>
+    <svg
+      viewBox="0 0 310 84"
+      width={size}
+      height={Math.round(size * 84 / 310)}
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: 'block' }}
+    >
       <defs>
-        <clipPath id={id}>
-          <polygon points={p([18,198],[118,198],[98,62],[38,62])} />
+        <clipPath id="lhc-nav">
+          <polygon points={navPts}/>
         </clipPath>
       </defs>
-      {/* Fundo branco torre */}
-      <polygon points={p([18,198],[118,198],[98,62],[38,62])} fill={body} />
-      {/* Listras diagonais */}
+
+      <polygon points={navPts} fill={body}/>
       {[-2,-1,0,1,2,3,4,5,6,7,8].map(i => (
         <polygon key={i}
-          points={`${x(i*22-30)},${y(198)} ${x(i*22-8)},${y(198)} ${x(i*22+170)},${y(-5)} ${x(i*22+148)},${y(-5)}`}
-          fill={stripe} clipPath={`url(#${id})`} />
+          points={`${(nOx+(i*22-30)*nSc).toFixed(1)},${nfy(198).toFixed(1)} ${(nOx+(i*22-8)*nSc).toFixed(1)},${nfy(198).toFixed(1)} ${(nOx+(i*22+170)*nSc).toFixed(1)},${nfy(-5).toFixed(1)} ${(nOx+(i*22+148)*nSc).toFixed(1)},${nfy(-5).toFixed(1)}`}
+          fill={stripe} clipPath="url(#lhc-nav)"/>
       ))}
-      {/* Contorno torre */}
-      <polygon points={p([18,198],[118,198],[98,62],[38,62])}
-        fill="none" stroke={stripe} strokeWidth={s(2)} strokeLinejoin="round" />
-      {/* Plataforma intermediária */}
-      <rect x={x(12)} y={y(148)} width={s(112)} height={s(6)} fill={stripe} />
-      <rect x={x(14)} y={y(137)} width={s(108)} height={s(2.5)} fill={stripe} />
-      {[16,23,30,37,44,51,58,65,72,79,86,93,100,107,114].map(bx=>(
-        <rect key={bx} x={x(bx)} y={y(137)} width={s(1.8)} height={s(11)} fill={stripe} />
+      <polygon points={navPts} fill="none" stroke={stripe} strokeWidth={nfs(2)} strokeLinejoin="round"/>
+      <rect x={nfx(12)} y={nfy(148)} width={nfs(112)} height={nfs(6)} fill={stripe}/>
+      <rect x={nfx(14)} y={nfy(137)} width={nfs(108)} height={nfs(2.5)} fill={stripe}/>
+      {[16,23,30,37,44,51,58,65,72,79,86,93,100,107,114].map(bx => (
+        <rect key={bx} x={nfx(bx)} y={nfy(137)} width={nfs(1.8)} height={nfs(11)} fill={stripe}/>
       ))}
-      <rect x={x(14)} y={y(153)} width={s(108)} height={s(2)} fill={stripe} />
-      {/* Varanda superior */}
-      <rect x={x(30)} y={y(60)} width={s(76)} height={s(4)} fill={stripe} />
-      <rect x={x(32)} y={y(50)} width={s(72)} height={s(2)} fill={stripe} />
-      {[34,40,46,52,58,64,70,76,82,88,94].map(bx=>(
-        <rect key={bx} x={x(bx)} y={y(50)} width={s(1.4)} height={s(10)} fill={stripe} />
+      <rect x={nfx(14)} y={nfy(153)} width={nfs(108)} height={nfs(2)} fill={stripe}/>
+      <rect x={nfx(30)} y={nfy(60)} width={nfs(76)} height={nfs(4)} fill={stripe}/>
+      <rect x={nfx(32)} y={nfy(50)} width={nfs(72)} height={nfs(2)} fill={stripe}/>
+      {[34,40,46,52,58,64,70,76,82,88,94].map(bx => (
+        <rect key={bx} x={nfx(bx)} y={nfy(50)} width={nfs(1.4)} height={nfs(10)} fill={stripe}/>
       ))}
-      {/* Base de alvenaria */}
-      <rect x={x(6)} y={y(215)} width={s(124)} height={s(7)} fill={stripe} rx={s(0.5)} />
-      {[[6,205,29,10],[37,205,30,10],[69,205,30,10],[101,205,27,10]].map(([bx,by,bw,bh],i)=>(
-        <rect key={i} x={x(bx)} y={y(by)} width={s(bw)} height={s(bh)}
-          fill={stripe} stroke={body} strokeWidth={s(0.7)} />
+      <rect x={nfx(6)} y={nfy(215)} width={nfs(124)} height={nfs(7)} fill={stripe} rx={nfs(0.5)}/>
+      {[[6,205,29,10],[37,205,30,10],[69,205,30,10],[101,205,27,10]].map(([bx,by,bw,bh],i) => (
+        <rect key={i} x={nfx(bx)} y={nfy(by)} width={nfs(bw)} height={nfs(bh)} fill={stripe} stroke={body} strokeWidth={nfs(0.7)}/>
       ))}
-      {[[6,195,21,10],[29,195,28,10],[59,195,28,10],[89,195,28,10],[119,195,11,10]].map(([bx,by,bw,bh],i)=>(
-        <rect key={i} x={x(bx)} y={y(by)} width={s(bw)} height={s(bh)}
-          fill={stripe} stroke={body} strokeWidth={s(0.7)} />
+      {[[6,195,21,10],[29,195,28,10],[59,195,28,10],[89,195,28,10],[119,195,11,10]].map(([bx,by,bw,bh],i) => (
+        <rect key={i} x={nfx(bx)} y={nfy(by)} width={nfs(bw)} height={nfs(bh)} fill={stripe} stroke={body} strokeWidth={nfs(0.7)}/>
       ))}
-      <rect x={x(2)} y={y(222)} width={s(132)} height={s(5)} fill={stripe} rx={s(0.5)} />
-      {/* Cúpula */}
-      <rect x={x(34)} y={y(30)} width={s(68)} height={s(30)}
-        fill={body} stroke={stripe} strokeWidth={s(1.8)} />
-      {[51,62,73,84].map(cx2=>(
-        <line key={cx2} x1={x(cx2)} y1={y(30)} x2={x(cx2)} y2={y(60)}
-          stroke={stripe} strokeWidth={s(1.5)} />
+      <rect x={nfx(2)} y={nfy(222)} width={nfs(132)} height={nfs(5)} fill={stripe} rx={nfs(0.5)}/>
+      <rect x={nfx(34)} y={nfy(30)} width={nfs(68)} height={nfs(30)} fill={body} stroke={stripe} strokeWidth={nfs(1.8)}/>
+      {[51,62,73,84].map(cx2 => (
+        <line key={cx2} x1={nfx(cx2)} y1={nfy(30)} x2={nfx(cx2)} y2={nfy(60)} stroke={stripe} strokeWidth={nfs(1.5)}/>
       ))}
-      <line x1={x(34)} y1={y(45)} x2={x(102)} y2={y(45)} stroke={stripe} strokeWidth={s(1.3)} />
-      <path d={`M ${x(27)} ${y(32)} Q ${x(68)} ${y(3)} ${x(109)} ${y(32)} Z`} fill={stripe} />
-      <circle cx={x(68)} cy={y(7)} r={s(5)} fill={stripe} />
-      <line x1={x(68)} y1={y(2)} x2={x(68)} y2={y(0)} stroke={stripe} strokeWidth={s(2)} />
-      <polygon points={`${x(68)},${y(0)} ${x(80)},${y(-4)} ${x(68)},${y(-8)}`} fill={stripe} />
-    </g>
+      <line x1={nfx(34)} y1={nfy(45)} x2={nfx(102)} y2={nfy(45)} stroke={stripe} strokeWidth={nfs(1.3)}/>
+      <path d={`M ${nfx(27)} ${nfy(32)} Q ${nfx(68)} ${nfy(3)} ${nfx(109)} ${nfy(32)} Z`} fill={stripe}/>
+      <circle cx={nfx(68)} cy={nfy(7)} r={nfs(5)} fill={stripe}/>
+      <line x1={nfx(68)} y1={nfy(2)} x2={nfx(68)} y2={nfy(0)} stroke={stripe} strokeWidth={nfs(2)}/>
+      <polygon points={`${nfx(68)},${nfy(0)} ${nfx(80)},${nfy(-4)} ${nfx(68)},${nfy(-8)}`} fill={stripe}/>
+
+      <text x="106" y="30" fontFamily="'Playfair Display',Georgia,serif"
+        fontSize="22" fontWeight="700" letterSpacing="4" fill={txtMain}>O PHAROL</text>
+      <line x1="106" y1="37" x2="302" y2="37" stroke={divider} strokeWidth="0.6"/>
+      <text x="108" y="50" fontFamily="'Montserrat',Arial,sans-serif"
+        fontSize="7.5" fontWeight="500" letterSpacing="5" fill={txtSub}>RESTAURANTE</text>
+    </svg>
   )
 }
