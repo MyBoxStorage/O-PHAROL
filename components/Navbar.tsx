@@ -22,7 +22,6 @@ const navLinks = [
 export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const [lang, setLang] = useState<'PT' | 'EN' | 'ES'>('PT')
   const [activeSection, setActiveSection] = useState('')
   const [hovered, setHovered] = useState<string | null>(null)
 
@@ -113,20 +112,6 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
 
         {/* ── Desktop CTA ── */}
         <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
-          {/* Lang switcher */}
-          <div style={{ display: 'flex', gap: 3 }}>
-            {(['PT', 'EN', 'ES'] as const).map((l) => (
-              <button key={l} onClick={() => setLang(l)} style={{
-                border: `1px solid ${lang === l ? 'rgba(201,168,76,0.7)' : 'rgba(255,255,255,0.14)'}`,
-                color: lang === l ? 'var(--gold)' : 'rgba(255,255,255,0.38)',
-                background: lang === l ? 'rgba(201,168,76,0.07)' : 'transparent',
-                fontSize: '0.55rem', letterSpacing: '0.14em', padding: '4px 9px', cursor: 'pointer',
-                transition: 'all 0.25s', fontFamily: 'var(--font-montserrat), sans-serif',
-              }}>{l}</button>
-            ))}
-          </div>
-
-          {/* Reservar */}
           <motion.button
             onClick={onReserve}
             whileHover={{ scale: 1.03 }}
@@ -207,11 +192,6 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
               >
                 Reservar Mesa
               </motion.button>
-              <div style={{ display: 'flex', gap: 6, marginTop: 16 }}>
-                {(['PT', 'EN', 'ES'] as const).map((l) => (
-                  <button key={l} onClick={() => setLang(l)} style={{ border: `1px solid ${lang === l ? 'var(--gold)' : 'rgba(255,255,255,0.15)'}`, background: 'transparent', color: lang === l ? 'var(--gold)' : 'rgba(255,255,255,0.4)', padding: '6px 12px', fontSize: '0.58rem', cursor: 'pointer', fontFamily: 'var(--font-montserrat), sans-serif' }}>{l}</button>
-                ))}
-              </div>
             </motion.aside>
           </>
         )}

@@ -7,8 +7,15 @@ type ReserveSectionProps = {
   onOpenFullReservation: () => void
 }
 
+function isValidEmail(value: string): boolean {
+  const v = value.trim()
+  if (!v) return false
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+}
+
 export default function ReserveSection({ onOpenFullReservation }: ReserveSectionProps) {
   const [nome, setNome] = useState('')
+  const [email, setEmail] = useState('')
   const [data, setData] = useState('')
   const [hora, setHora] = useState('11h30')
   const [pessoas, setPessoas] = useState('2 pessoas')
@@ -16,20 +23,45 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
   const [preferenciaMesa, setPreferenciaMesa] = useState('Varanda (vista para o mar)')
   const [observacoes, setObservacoes] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [isSending, setIsSending] = useState(false)
 
-  const handleSubmit = () => {
-    if (!nome.trim() || !data || !whatsapp.trim()) {
-      alert('Preencha nome, data e WhatsApp para continuar.')
+  const handleSubmit = async () => {
+    if (!nome.trim() || !data || !whatsapp.trim() || !isValidEmail(email)) {
+      alert('Preencha nome, e-mail válido, data e WhatsApp para continuar.')
       return
     }
+    setIsSending(true)
+    try {
+      await fetch('/api/reserva', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: nome.trim(),
+          email: email.trim(),
+          whatsapp: whatsapp.trim(),
+          data,
+          horario: hora,
+          pessoas,
+          preferencias: [preferenciaMesa],
+          restricoes: observacoes ? [observacoes] : [],
+          ocasiao: observacoes.toLowerCase().includes('anivers') || observacoes.toLowerCase().includes('especial')
+            ? 'special_occasion'
+            : undefined,
+        }),
+      })
+    } catch {
+      /* fluxo segue para o WhatsApp */
+    }
+    setIsSending(false)
     const msg = encodeURIComponent(
       `*Reserva — O Pharol*\n\n` +
       `👤 Nome: ${nome}\n` +
+      `📧 E-mail: ${email.trim()}\n` +
       `📅 Data: ${data}\n` +
       `🕐 Horário: ${hora}\n` +
       `👥 Pessoas: ${pessoas}\n` +
       `🪑 Mesa: ${preferenciaMesa}\n` +
-      `📱 WhatsApp: ${whatsapp}` +
+      `📱 WhatsApp: ${whatsapp}\n` +
       (observacoes ? `\n📝 Obs: ${observacoes}` : '') +
       `\n\n✨ Para personalizar seu prato, acesse sua área do cliente em: https://o-pharol.vercel.app`
     )
@@ -85,6 +117,7 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
               className="reserve-form-wrap" style={{ marginTop: 42, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.2)', padding: 48, textAlign: 'left' }}>
               <div className="reserve-form-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginBottom: 20 }}>
                 <div><label style={labelStyle}>Nome completo</label><input value={nome} onChange={(e) => setNome(e.target.value)} style={inputStyle} /></div>
+                <div><label style={labelStyle}>E-mail (obrigatório)</label><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} style={inputStyle} placeholder="seu@email.com" /></div>
                 <div><label style={labelStyle}>Data</label><input type="date" value={data} onChange={(e) => setData(e.target.value)} style={inputStyle} /></div>
                 <div>
                   <label style={labelStyle}>Horário</label>
@@ -114,9 +147,9 @@ export default function ReserveSection({ onOpenFullReservation }: ReserveSection
               <div className="reserve-form-actions" style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
                 <p style={{ margin: 0, color: 'rgba(255,255,255,0.45)', fontSize: '0.75rem' }}>Para grupos acima de 20 pessoas, utilize a reserva completa.</p>
                 <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                  <button onClick={handleSubmit} className="btn-primary">
+                  <button onClick={handleSubmit} className="btn-primary" disabled={isSending}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.525 5.84L0 24l6.306-1.505A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.82 9.82 0 01-5.006-1.368l-.36-.214-3.741.893.942-3.648-.235-.374A9.797 9.797 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12c0 5.43-4.388 9.818-9.818 9.818z"/></svg>
-                    Enviar Reserva via WhatsApp
+                    {isSending ? 'Enviando…' : 'Enviar Reserva via WhatsApp'}
                   </button>
                   <button onClick={onOpenFullReservation} className="btn-secondary">Reserva Completa</button>
                 </div>
