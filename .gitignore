@@ -36,4 +36,7 @@ Thumbs.db
 # Vercel
 .vercel
 
-.vercel
+# Docs internos e roadmap
+roadmap/
+_docs/
+_sql/
