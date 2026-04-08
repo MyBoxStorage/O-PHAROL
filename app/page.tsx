@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState } from 'react'
 import Loader from '@/components/Loader'
@@ -24,6 +24,7 @@ export default function Page() {
   const [openClient, setOpenClient] = useState(false)
   const [openQueue, setOpenQueue] = useState(false)
   const [openAdmin, setOpenAdmin] = useState(false)
+  const [clientPrefill, setClientPrefill] = useState<{ email: string; nome: string } | undefined>()
 
   return (
     <>
@@ -54,8 +55,20 @@ export default function Page() {
         onAdmin={() => setOpenAdmin(true)}
       />
 
-      <ReservationOverlay open={openReservation} onClose={() => setOpenReservation(false)} />
-      <ClientOverlay open={openClient} onClose={() => setOpenClient(false)} />
+      <ReservationOverlay
+        open={openReservation}
+        onClose={() => setOpenReservation(false)}
+        onClientArea={(prefill) => {
+          setClientPrefill(prefill)
+          setOpenReservation(false)
+          setOpenClient(true)
+        }}
+      />
+      <ClientOverlay
+        open={openClient}
+        onClose={() => { setOpenClient(false); setClientPrefill(undefined) }}
+        prefill={clientPrefill}
+      />
       <QueueOverlay open={openQueue} onClose={() => setOpenQueue(false)} />
       <AdminOverlay open={openAdmin} onClose={() => setOpenAdmin(false)} />
     </>

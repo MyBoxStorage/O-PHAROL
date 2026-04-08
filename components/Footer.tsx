@@ -60,15 +60,33 @@ export default function Footer({ onReserve, onQueue, onClientArea, onAdmin }: Fo
               Excelência gastronômica na Avenida Atlântica de Balneário Camboriú desde 1986. Um farol que guia aos melhores sabores do mar.
             </p>
             <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
-              {['Instagram', 'TripAdvisor', 'WhatsApp'].map((s) => (
-                <motion.div
-                  key={s}
-                  whileHover={{ y: -2, borderColor: 'var(--gold)' }}
-                  style={{ border: '1px solid rgba(255,255,255,0.12)', padding: '6px 12px', fontSize: '0.56rem', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', transition: 'all 0.3s', textTransform: 'uppercase' }}
-                >
-                  {s}
-                </motion.div>
-              ))}
+              <motion.a
+                href="https://instagram.com/opharolbc.oficial"
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ y: -2, borderColor: 'var(--gold)' }}
+                style={{ border: '1px solid rgba(255,255,255,0.12)', padding: '6px 12px', fontSize: '0.56rem', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', transition: 'all 0.3s', textTransform: 'uppercase' }}
+              >
+                Instagram
+              </motion.a>
+              <motion.a
+                href="https://tripadvisor.com.br"
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ y: -2, borderColor: 'var(--gold)' }}
+                style={{ border: '1px solid rgba(255,255,255,0.12)', padding: '6px 12px', fontSize: '0.56rem', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', transition: 'all 0.3s', textTransform: 'uppercase' }}
+              >
+                TripAdvisor
+              </motion.a>
+              <motion.a
+                href="https://wa.me/554733673800"
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ y: -2, borderColor: 'var(--gold)' }}
+                style={{ border: '1px solid rgba(255,255,255,0.12)', padding: '6px 12px', fontSize: '0.56rem', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', transition: 'all 0.3s', textTransform: 'uppercase' }}
+              >
+                WhatsApp
+              </motion.a>
             </div>
           </div>
 
@@ -107,7 +125,6 @@ export default function Footer({ onReserve, onQueue, onClientArea, onAdmin }: Fo
                 { label: 'Minhas Reservas', fn: onClientArea },
                 { label: 'Fidelidade', fn: onClientArea },
                 { label: 'Histórico de Visitas', fn: onClientArea },
-                { label: 'Admin', fn: onAdmin },
               ].map(({ label, fn }) => (
                 <button key={label} onClick={fn} style={linkStyle}
                   onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--gold)')}

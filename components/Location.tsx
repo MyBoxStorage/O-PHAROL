@@ -162,7 +162,7 @@ export default function Location() {
               {/* Gold top bar */}
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark))', zIndex: 2 }} />
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.312!2d-48.63847!3d-26.9947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94d8e68e0f1c5e0b%3A0xa8c5c5c5c5c5c5c5!2sAv.+Atl%C3%A2ntica%2C+2554+-+Centro%2C+Balne%C3%A1rio+Cambori%C3%BA+-+SC!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.8!2d-48.6389!3d-26.9945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94d8e5fbbfae1c81%3A0x8ea8b4b9d29e0f9b!2sO%20Pharol%20Restaurante%20Gourmet!5e0!3m2!1spt-BR!2sbr!4v1700000000000"
                 width="100%" height="100%"
                 style={{ border: 0, display: 'block', filter: 'grayscale(20%) contrast(1.05) brightness(0.96)' }}
                 allowFullScreen loading="lazy"
@@ -176,7 +176,7 @@ export default function Location() {
               <span style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.14em', textTransform: 'uppercase', fontFamily: 'var(--font-montserrat), sans-serif' }}>
                 Av. Atlântica, 2554 · Balneário Camboriú
               </span>
-              <a href="https://maps.google.com/?q=Av+Atlântica+2554+Balneário+Camboriú" target="_blank" rel="noreferrer"
+              <a href="https://maps.google.com/?q=O+Pharol+Restaurante+Gourmet+Balneário+Camboriú" target="_blank" rel="noreferrer"
                 style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--gold)', fontSize: '0.58rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontFamily: 'var(--font-montserrat), sans-serif', fontWeight: 600, transition: 'opacity 0.2s' }}
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.7')}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
