@@ -3,7 +3,8 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import LogoPharol from './ui/LogoPharol'
-// LighthouseSVG mantido apenas se usado em outro lugar
+import { useLang } from '@/contexts/LangContext'
+import type { Lang } from '@/lib/i18n'
 
 type NavbarProps = {
   onReserve: () => void
@@ -11,19 +12,28 @@ type NavbarProps = {
   onClientArea: () => void
 }
 
-const navLinks = [
-  { href: '#about', label: 'O Restaurante', id: 'about' },
-  { href: '#menu', label: 'Cardápio', id: 'menu' },
-  { href: '#history', label: 'Nossa História', id: 'history' },
-  { href: '#location', label: 'Localização', id: 'location' },
-  { href: '#', label: 'Fila Virtual', id: '' },
-]
+const QUEUE_LINK_ID = '__queue__'
 
 export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps) {
+  const { lang, setLang, t } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [hovered, setHovered] = useState<string | null>(null)
+
+  const navLinks = [
+    { href: '#about', label: t.nav.restaurant, id: 'about' },
+    { href: '#menu', label: t.nav.menu, id: 'menu' },
+    { href: '#history', label: t.nav.history, id: 'history' },
+    { href: '#location', label: t.nav.location, id: 'location' },
+    { href: '#', label: t.nav.virtualQueue, id: QUEUE_LINK_ID },
+  ]
+
+  const LANGS: { code: Lang; flag: string }[] = [
+    { code: 'pt', flag: '🇧🇷' },
+    { code: 'en', flag: '🇺🇸' },
+    { code: 'es', flag: '🇦🇷' },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
@@ -40,6 +50,28 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
     ids.forEach((id) => { const el = document.getElementById(id); if (el) observer.observe(el) })
     return () => observer.disconnect()
   }, [])
+
+  const langBtnStyle = (code: Lang): React.CSSProperties => ({
+    border: `1px solid ${lang === code ? 'rgba(201,168,76,0.7)' : scrolled ? 'rgba(27,43,107,0.2)' : 'rgba(255,255,255,0.14)'}`,
+    color: lang === code ? 'var(--gold)' : scrolled ? 'var(--text-mid)' : 'rgba(255,255,255,0.38)',
+    background: lang === code ? 'rgba(201,168,76,0.07)' : 'transparent',
+    fontSize: '0.6rem',
+    padding: '4px 7px',
+    cursor: 'pointer',
+    fontFamily: 'var(--font-montserrat), sans-serif',
+    letterSpacing: '0.1em',
+  })
+
+  const langBtnStyleDrawer = (code: Lang): React.CSSProperties => ({
+    border: `1px solid ${lang === code ? 'rgba(201,168,76,0.7)' : 'rgba(255,255,255,0.14)'}`,
+    color: lang === code ? 'var(--gold)' : 'rgba(255,255,255,0.38)',
+    background: lang === code ? 'rgba(201,168,76,0.07)' : 'transparent',
+    fontSize: '0.6rem',
+    padding: '4px 7px',
+    cursor: 'pointer',
+    fontFamily: 'var(--font-montserrat), sans-serif',
+    letterSpacing: '0.1em',
+  })
 
   return (
     <>
@@ -76,12 +108,12 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
             const active = activeSection === link.id
             const isHov = hovered === link.label
             return (
-              <li key={link.label} style={{ position: 'relative' }}>
+              <li key={link.id} style={{ position: 'relative' }}>
                 <a
                   href={link.href}
                   onMouseEnter={() => setHovered(link.label)}
                   onMouseLeave={() => setHovered(null)}
-                  onClick={(e) => { if (link.label === 'Fila Virtual') { e.preventDefault(); onQueue() } }}
+                  onClick={(e) => { if (link.id === QUEUE_LINK_ID) { e.preventDefault(); onQueue() } }}
                   style={{
                     fontSize: '0.64rem',
                     textTransform: 'uppercase',
@@ -112,6 +144,11 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
 
         {/* ── Desktop CTA ── */}
         <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
+          {LANGS.map((l) => (
+            <button key={l.code} type="button" onClick={() => setLang(l.code)} style={langBtnStyle(l.code)}>
+              {l.flag} {l.code.toUpperCase()}
+            </button>
+          ))}
           <motion.button
             onClick={onReserve}
             whileHover={{ scale: 1.03 }}
@@ -126,10 +163,9 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
               boxShadow: '0 4px 20px rgba(201,168,76,0.22)',
             }}
           >
-            Reservar Mesa
+            {t.nav.reserveBtn}
           </motion.button>
 
-          {/* Minha Área */}
           <button onClick={onClientArea} style={{
             background: 'transparent', border: `1px solid ${scrolled ? 'rgba(27,43,107,0.25)' : 'rgba(255,255,255,0.18)'}`,
             color: scrolled ? 'var(--text-mid)' : 'rgba(255,255,255,0.52)', fontSize: '0.58rem', letterSpacing: '0.13em',
@@ -139,7 +175,7 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = scrolled ? 'var(--navy)' : 'rgba(255,255,255,0.4)'; e.currentTarget.style.color = scrolled ? 'var(--navy)' : 'rgba(255,255,255,0.82)' }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = scrolled ? 'rgba(27,43,107,0.25)' : 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = scrolled ? 'var(--text-mid)' : 'rgba(255,255,255,0.52)' }}
           >
-            Minha Área
+            {t.nav.myArea}
           </button>
         </div>
 
@@ -174,12 +210,19 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
                 display: 'flex', flexDirection: 'column',
               }}
             >
+              <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
+                {LANGS.map((l) => (
+                  <button key={l.code} type="button" onClick={() => setLang(l.code)} style={langBtnStyleDrawer(l.code)}>
+                    {l.flag} {l.code.toUpperCase()}
+                  </button>
+                ))}
+              </div>
               <div style={{ display: 'grid', gap: 0 }}>
                 {navLinks.map((link, i) => (
-                  <motion.a key={link.label} href={link.href}
+                  <motion.a key={link.id} href={link.href}
                     initial={{ x: 24, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: i * 0.055 + 0.1 }}
-                    onClick={(e) => { setOpen(false); if (link.label === 'Fila Virtual') { e.preventDefault(); onQueue() } }}
+                    onClick={(e) => { setOpen(false); if (link.id === QUEUE_LINK_ID) { e.preventDefault(); onQueue() } }}
                     style={{ color: 'rgba(255,255,255,0.72)', letterSpacing: '0.14em', textTransform: 'uppercase', fontSize: '0.7rem', fontWeight: 600, padding: '13px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
                   >
                     {link.label}
@@ -190,7 +233,7 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38 }}
                 className="btn-primary" style={{ width: '100%', marginTop: 28 }}
               >
-                Reservar Mesa
+                {t.nav.reserveBtn}
               </motion.button>
             </motion.aside>
           </>

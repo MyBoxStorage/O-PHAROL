@@ -3,10 +3,12 @@
 import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { videos } from '@/lib/videoData'
+import { useLang } from '@/contexts/LangContext'
 
 const items = videos.filter((v) => v.id !== 'hero')
 
 export default function Showcase() {
+  const { t } = useLang()
   const trackRef = useRef<HTMLDivElement>(null)
   const [dragging, setDragging] = useState(false)
   const [startX, setStartX] = useState(0)
@@ -34,10 +36,10 @@ export default function Showcase() {
         style={{ marginBottom: 48 }}
       >
         <div className="section-header" style={{ marginBottom: 0 }}>
-          <span className="section-label">Experiências</span>
+          <span className="section-label">{t.showcase.label}</span>
           <h2 className="section-title" style={{ color: 'var(--navy)' }}>
-            Cada momento,{' '}
-            <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>uma memória</em>
+            {t.showcase.heading}{' '}
+            <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>{t.showcase.headingEm}</em>
           </h2>
         </div>
       </motion.div>
@@ -82,7 +84,9 @@ export default function Showcase() {
           setProgress(ratio * 100)
         }}
       >
-        {items.map((item, index) => (
+        {items.map((item, index) => {
+          const vid = t.showcase.videos[item.id as keyof typeof t.showcase.videos]
+          return (
           <motion.article
             key={item.id}
             className="showcase-card showcase-card-inner"
@@ -174,7 +178,7 @@ export default function Showcase() {
                   marginBottom: 4,
                 }}
               >
-                {item.label}
+                {vid.label}
               </div>
               <div
                 style={{
@@ -185,11 +189,12 @@ export default function Showcase() {
                   fontWeight: 600,
                 }}
               >
-                {item.sublabel}
+                {vid.sublabel}
               </div>
             </div>
           </motion.article>
-        ))}
+          )
+        })}
       </div>
 
       {/* Footer: hint + progress */}
@@ -200,10 +205,10 @@ export default function Showcase() {
             transition={{ duration: 2.5, repeat: Infinity }}
             style={{ color: 'var(--text-light)', fontSize: '0.56rem', letterSpacing: '0.25em', textTransform: 'uppercase' }}
           >
-            Arraste para explorar →
+            {t.showcase.drag}
           </motion.span>
           <span style={{ color: 'var(--text-light)', fontSize: '0.56rem', letterSpacing: '0.2em' }}>
-            {items.length} experiências
+            {t.showcase.experiencesLabel(items.length)}
           </span>
         </div>
         <div style={{ height: 1, background: 'rgba(27,43,107,0.1)', borderRadius: 1 }}>

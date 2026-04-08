@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useLang } from '@/contexts/LangContext'
 
 /* ── Ícones SVG temáticos ── */
 const LobsterIcon = () => (
@@ -35,14 +36,15 @@ const AwardIcon = () => (
   </svg>
 )
 
-const features = [
-  { Icon: LobsterIcon, label: 'Frutos do Mar', desc: 'Ingredientes frescos, selecionados diariamente' },
-  { Icon: WaveIcon,    label: 'Vista para o Mar', desc: 'Varanda privilegiada na Av. Atlântica' },
-  { Icon: MusicIcon,   label: 'Música ao Vivo', desc: 'Ambiente sofisticado e acolhedor' },
-  { Icon: AwardIcon,   label: "Travellers' Choice", desc: 'Top 10% Tripadvisor — +1.400 avaliações' },
+const featureConfigs = [
+  { Icon: LobsterIcon, key: 'seafood' as const },
+  { Icon: WaveIcon,    key: 'seaview' as const },
+  { Icon: MusicIcon,   key: 'music' as const },
+  { Icon: AwardIcon,   key: 'award' as const },
 ]
 
 export default function About() {
+  const { t } = useLang()
   return (
     <section id="about" className="section" style={{ background: 'var(--white)', position: 'relative', overflow: 'hidden' }}>
       {/* Subtle dot pattern */}
@@ -103,7 +105,7 @@ export default function About() {
             }}
           >
             <div className="badge-number" style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--gold)', fontWeight: 900, fontSize: '2.8rem', lineHeight: 1 }}>38</div>
-            <div style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginTop: 3 }}>Anos</div>
+            <div style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginTop: 3 }}>{t.cred.yearsUnit}</div>
           </motion.div>
         </motion.div>
 
@@ -118,16 +120,16 @@ export default function About() {
             initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
             style={{ fontFamily: 'var(--font-great-vibes), cursive', fontSize: '2.8rem', color: 'var(--gold)', display: 'block', lineHeight: 1.1 }}
           >
-            O Pharol
+            {t.about.scriptTitle}
           </motion.span>
 
           <motion.h2
             initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.22 }}
             style={{ margin: '6px 0 0', fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(1.75rem, 2.8vw, 2.35rem)', color: 'var(--navy)', lineHeight: 1.1, fontWeight: 400 }}
           >
-            Uma experiência{' '}
-            <em style={{ color: 'var(--red)', fontStyle: 'italic' }}>única</em>{' '}
-            à beira-mar
+            {t.about.heading}{' '}
+            <em style={{ color: 'var(--red)', fontStyle: 'italic' }}>{t.about.headingEm}</em>{' '}
+            {t.about.headingSuffix}
           </motion.h2>
 
           {/* Gold divider */}
@@ -138,17 +140,19 @@ export default function About() {
 
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.32 }}
             style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.16rem', lineHeight: 1.9, color: 'var(--text-mid)', marginBottom: 12 }}>
-            Situado no coração da Avenida Atlântica, O Pharol ilumina o cenário gastronômico de Balneário Camboriú desde 1986. Como um farol que guia os navegantes ao porto seguro, nosso restaurante conduz cada hóspede a uma jornada inesquecível.
+            {t.about.p1}
           </motion.p>
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.38 }}
             style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.16rem', lineHeight: 1.9, color: 'var(--text-mid)', marginBottom: 32 }}>
-            Especialistas em frutos do mar frescos, combinamos a riqueza do oceano com técnicas clássicas da culinária brasileira litorânea, criando pratos que contam a história de nossa terra e do nosso mar.
+            {t.about.p2}
           </motion.p>
 
           {/* Features */}
           <div className="about-features-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 36 }}>
-            {features.map(({ Icon, label, desc }, i) => (
-              <motion.div key={label}
+            {featureConfigs.map(({ Icon, key }, i) => {
+              const { label, desc } = t.about.features[key]
+              return (
+              <motion.div key={key}
                 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 + i * 0.07 }}
                 whileHover={{ borderColor: 'rgba(201,168,76,0.35)', background: 'rgba(201,168,76,0.03)' }}
                 style={{ display: 'flex', gap: 12, padding: '14px 16px', border: '1px solid rgba(201,168,76,0.14)', transition: 'all 0.3s', cursor: 'default' }}
@@ -161,7 +165,8 @@ export default function About() {
                   <div style={{ fontFamily: 'var(--font-cormorant), serif', color: 'var(--text-mid)', fontSize: '0.94rem', lineHeight: 1.4 }}>{desc}</div>
                 </div>
               </motion.div>
-            ))}
+              )
+            })}
           </div>
 
           {/* CTA */}
@@ -171,7 +176,7 @@ export default function About() {
             onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--navy)'; e.currentTarget.style.color = 'var(--gold)' }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--navy)' }}
           >
-            Explorar o Cardápio
+            {t.about.cta}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </motion.a>
         </motion.div>

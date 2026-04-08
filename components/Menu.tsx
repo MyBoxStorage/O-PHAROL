@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { menuTabs, type MenuTab } from '@/lib/menuData'
+import { useLang } from '@/contexts/LangContext'
 
 /* ─── Banner de destaque (sábado, domingo, rodízio) ─── */
 function MenuBanner({ title, info, price, bgColor }: { title: string; info: string; price: string; bgColor?: string }) {
@@ -66,6 +67,7 @@ function AccordionSection({ section, activeId, tabId, onToggle }: {
 }
 
 export default function Menu() {
+  const { t } = useLang()
   const [activeTab, setActiveTab] = useState<string>('sugestoes')
   const [openSection, setOpenSection] = useState<string>('')
   const [search, setSearch] = useState('')
@@ -85,7 +87,11 @@ export default function Menu() {
           (item.nameEn?.toLowerCase().includes(searchTerm)) ||
           (item.desc?.toLowerCase().includes(searchTerm))
         )
-        .map((item) => ({ tabLabel: tab.label, sectionTitle: section.title, item }))
+        .map((item) => ({
+          tabLabel: t.menu.tabs[tab.id as keyof typeof t.menu.tabs],
+          sectionTitle: section.title,
+          item,
+        }))
     )
   )
 
@@ -99,9 +105,9 @@ export default function Menu() {
     <section id="menu" className="section" style={{ background: 'var(--white)' }}>
       <div className="container">
         <div className="section-header">
-          <span className="section-label">Nossa Gastronomia</span>
-          <h2 className="section-title">Cardápio <em style={{ color: 'var(--red)' }}>O Pharol</em></h2>
-          <p className="section-sub">Ingredientes selecionados, preparo com excelência. Não fazemos meio prato.</p>
+          <span className="section-label">{t.menu.label}</span>
+          <h2 className="section-title">{t.menu.heading} <em style={{ color: 'var(--red)' }}>{t.menu.headingEm}</em></h2>
+          <p className="section-sub">{t.menu.sub}</p>
         </div>
 
         {/* Campo de busca */}
@@ -120,7 +126,7 @@ export default function Menu() {
           </svg>
           <input
             type="text"
-            placeholder="Buscar prato, ingrediente…"
+            placeholder={t.menu.searchPlaceholder}
             value={search}
             onChange={(e) => { setSearch(e.target.value) }}
             style={{
@@ -161,7 +167,7 @@ export default function Menu() {
               color: 'var(--text-light)', fontFamily: 'var(--font-montserrat), sans-serif',
               marginBottom: 16,
             }}>
-              {searchResults.length} resultado{searchResults.length !== 1 ? 's' : ''} para &quot;{search}&quot;
+              {t.menu.resultsSuffix(searchResults.length, search)}
             </div>
 
             {searchResults.length === 0 ? (
@@ -170,13 +176,13 @@ export default function Menu() {
                 background: 'white', border: '1px solid var(--cream-dark)',
               }}>
                 <div style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--navy)', marginBottom: 8 }}>
-                  Nenhum prato encontrado
+                  {t.menu.noResults}
                 </div>
                 <p style={{
                   fontFamily: 'var(--font-cormorant), serif', fontStyle: 'italic',
                   color: 'var(--text-mid)', fontSize: '1rem',
                 }}>
-                  Tente outro termo ou navegue pelo cardápio abaixo.
+                  {t.menu.noResultsSub}
                 </p>
               </div>
             ) : (
@@ -237,7 +243,7 @@ export default function Menu() {
                 {menuTabs.map((tab) => (
                   <button key={tab.id} onClick={() => handleTabChange(tab.id)}
                     style={{ border: 'none', background: 'transparent', padding: '13px 22px', color: tab.id === activeTab ? 'var(--navy)' : 'var(--text-light)', fontSize: '0.64rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.14em', position: 'relative', cursor: 'pointer', whiteSpace: 'nowrap', transition: 'color 0.25s' }}>
-                    {tab.label}
+                    {t.menu.tabs[tab.id as keyof typeof t.menu.tabs]}
                     {tab.id === activeTab && <motion.div layoutId="tab-indicator" style={{ position: 'absolute', left: 0, right: 0, bottom: -1, height: 2, background: 'var(--gold)' }} />}
                   </button>
                 ))}
@@ -256,7 +262,7 @@ export default function Menu() {
                         fontSize: '0.58rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em',
                         padding: '9px 4px', cursor: 'pointer', lineHeight: 1.3, textAlign: 'center', transition: 'all 0.2s',
                       }}>
-                      {tab.label}
+                      {t.menu.tabs[tab.id as keyof typeof t.menu.tabs]}
                     </button>
                   )
                 })}

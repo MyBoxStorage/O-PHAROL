@@ -3,8 +3,10 @@
 import { motion } from 'framer-motion'
 import LogoPharol from './ui/LogoPharol'
 import { timeline } from '@/lib/timelineData'
+import { useLang } from '@/contexts/LangContext'
 
 export default function History() {
+  const { t } = useLang()
   return (
     <section id="history" className="section" style={{ background: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
       {/* top / bottom gold lines */}
@@ -26,10 +28,10 @@ export default function History() {
           transition={{ duration: 0.8 }}
           style={{ marginBottom: 80 }}
         >
-          <span className="section-label">Nossa Trajetória</span>
+          <span className="section-label">{t.history.label}</span>
           <h2 className="section-title" style={{ color: 'var(--navy)' }}>
-            Uma história de{' '}
-            <em style={{ color: 'var(--gold)' }}>excelência</em>
+            {t.history.heading}{' '}
+            <em style={{ color: 'var(--gold)' }}>{t.history.headingEm}</em>
           </h2>
         </motion.div>
 

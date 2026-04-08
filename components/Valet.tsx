@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useLang } from '@/contexts/LangContext'
 
 const CarIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
@@ -36,6 +37,7 @@ const ClockOutlineIcon = () => (
 )
 
 export default function Valet() {
+  const { t } = useLang()
   return (
     <section
       style={{
@@ -80,20 +82,20 @@ export default function Valet() {
                 <CarIcon />
               </div>
               <div>
-                <div style={{ fontSize: '0.55rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold-dark)', fontFamily: 'var(--font-montserrat), sans-serif', marginBottom: 3 }}>Conveniência Premium</div>
-                <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.45rem', color: 'var(--navy)', lineHeight: 1.1 }}>Valet Parking <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>disponível</em></div>
+                <div style={{ fontSize: '0.55rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--gold-dark)', fontFamily: 'var(--font-montserrat), sans-serif', marginBottom: 3 }}>{t.valet.tag}</div>
+                <div style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '1.45rem', color: 'var(--navy)', lineHeight: 1.1 }}>{t.valet.heading} <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>{t.valet.headingEm}</em></div>
               </div>
             </div>
 
             <p style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.08rem', fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: 1.65, margin: '0 0 20px', maxWidth: 480 }}>
-              Chegue com tranquilidade. Nossa equipe cuida do seu veículo enquanto você aprecia cada momento da experiência O Pharol.
+              {t.valet.p}
             </p>
 
             <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
               {[
-                { Icon: ShieldIcon, label: 'Veículo segurado durante a visita' },
-                { Icon: ClockOutlineIcon, label: 'Disponível em todos os horários' },
-                { Icon: KeyIcon, label: 'Entrega rápida na saída' },
+                { Icon: ShieldIcon, label: t.valet.features.insured },
+                { Icon: ClockOutlineIcon, label: t.valet.features.allHours },
+                { Icon: KeyIcon, label: t.valet.features.quickReturn },
               ].map(({ Icon, label }) => (
                 <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ color: 'var(--gold)', opacity: 0.8 }}><Icon /></span>
@@ -124,7 +126,7 @@ export default function Valet() {
               ))}
 
               <div style={{ fontFamily: 'var(--font-great-vibes), cursive', fontSize: '3.2rem', color: 'var(--navy)', lineHeight: 1, marginBottom: 4 }}>Valet</div>
-              <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.5rem', letterSpacing: '0.4em', textTransform: 'uppercase', color: 'var(--text-light)', marginBottom: 14 }}>Serviço Exclusivo</div>
+              <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.5rem', letterSpacing: '0.4em', textTransform: 'uppercase', color: 'var(--text-light)', marginBottom: 14 }}>{t.valet.serviceBadge}</div>
               <div style={{ width: 40, height: 1, background: 'rgba(201,168,76,0.5)', margin: '0 auto 14px' }} />
               <div style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '0.62rem', color: 'var(--text-mid)', letterSpacing: '0.08em' }}>Av. Atlântica, 2554</div>
             </div>

@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { videos } from '@/lib/videoData'
 import LogoPharol from './ui/LogoPharol'
+import { useLang } from '@/contexts/LangContext'
 
 type HeroProps = {
   onReserve: () => void
@@ -11,6 +12,7 @@ type HeroProps = {
 const heroVideo = videos.find((item) => item.id === 'hero')
 
 export default function Hero({ onReserve }: HeroProps) {
+  const { t } = useLang()
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, typeof window !== 'undefined' ? window.innerHeight : 1000], [0, 80])
 
@@ -50,7 +52,7 @@ export default function Hero({ onReserve }: HeroProps) {
           style={{ display: 'inline-flex', gap: 8, alignItems: 'center', border: '1px solid rgba(201,168,76,0.35)', padding: '8px 20px', marginBottom: 28 }}
         >
           <motion.div animate={{ opacity: [0.6, 1, 0.6] }} transition={{ duration: 1.2, repeat: Infinity }} style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--gold)' }} />
-          <span style={{ fontSize: '0.62rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--gold)' }}>Excelência Gastronômica · Av. Atlântica · BC</span>
+          <span style={{ fontSize: '0.62rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--gold)' }}>{t.hero.badge}</span>
         </motion.div>
 
         <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 1 }} style={{ margin: 0, fontFamily: 'var(--font-playfair), serif', fontSize: 'clamp(3.5rem, 9vw, 8rem)', fontWeight: 900, lineHeight: 0.88, color: 'var(--white)' }}>
@@ -58,11 +60,11 @@ export default function Hero({ onReserve }: HeroProps) {
         </motion.h1>
 
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65, duration: 0.9 }} style={{ fontFamily: 'var(--font-great-vibes), cursive', color: 'var(--gold)', fontSize: 'clamp(1.8rem, 4vw, 3.2rem)', marginTop: 4 }}>
-          Restaurante Gourmet
+          {t.hero.tagline}
         </motion.div>
 
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 0.8, y: 0 }} transition={{ delay: 0.85, duration: 0.85 }} style={{ margin: '16px 0 36px', fontFamily: 'var(--font-cormorant), serif', color: 'rgba(255,255,255,0.8)', fontStyle: 'italic', fontSize: 'clamp(1rem, 1.8vw, 1.3rem)' }}>
-          "Excelência gastronômica desde 1986"
+          {t.hero.subtitle}
         </motion.p>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginBottom: 38 }}>
@@ -78,13 +80,13 @@ export default function Hero({ onReserve }: HeroProps) {
           className="hero-cta-group"
           style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}
         >
-          <button className="btn-primary" onClick={onReserve}>Reservar Mesa <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg></button>
-          <a href="#menu" className="btn-secondary">Ver Cardápio</a>
+          <button className="btn-primary" onClick={onReserve}>{t.hero.reserveBtn} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg></button>
+          <a href="#menu" className="btn-secondary">{t.hero.menuBtn}</a>
         </motion.div>
       </div>
 
       <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: 32, zIndex: 2, display: 'grid', gap: 8, justifyItems: 'center' }}>
-        <span style={{ fontSize: '0.58rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>Descobrir</span>
+        <span style={{ fontSize: '0.58rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>{t.hero.discover}</span>
         <motion.div animate={{ scaleY: [0, 1, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }} style={{ width: 1, height: 48, background: 'linear-gradient(to bottom, var(--gold), transparent)', transformOrigin: 'top' }} />
       </div>
     </section>

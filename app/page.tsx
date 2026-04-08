@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { LangProvider } from '@/contexts/LangContext'
 import Loader from '@/components/Loader'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
@@ -27,7 +28,7 @@ export default function Page() {
   const [clientPrefill, setClientPrefill] = useState<{ email: string; nome: string } | undefined>()
 
   return (
-    <>
+    <LangProvider>
       {!loaded && <Loader onComplete={() => setLoaded(true)} />}
 
       <Navbar
@@ -71,6 +72,6 @@ export default function Page() {
       />
       <QueueOverlay open={openQueue} onClose={() => setOpenQueue(false)} />
       <AdminOverlay open={openAdmin} onClose={() => setOpenAdmin(false)} />
-    </>
+    </LangProvider>
   )
 }

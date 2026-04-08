@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useCounter } from '@/hooks/useCounter'
+import { useLang } from '@/contexts/LangContext'
 
 /* ── Ícones SVG inline para cada credencial ── */
 const StarIcon = () => (
@@ -44,16 +45,17 @@ const MapPinIcon = () => (
 )
 
 export default function Credentials() {
+  const { t } = useLang()
   const years    = useCounter(38)
   const reviews  = useCounter(1400)
   const capacity = useCounter(500)
 
   const items = [
-    { ref: years.ref,    Icon: StarIcon,   big: `${years.count}`,   unit: 'anos',         sub: 'Tradição em frutos do mar' },
-    { ref: reviews.ref,  Icon: TrophyIcon, big: `+${reviews.count.toLocaleString('pt-BR')}`, unit: 'avaliações', sub: 'Tripadvisor · Top 10%' },
-    { ref: capacity.ref, Icon: UsersIcon,  big: `+${capacity.count}`, unit: 'lugares',    sub: 'Um dos maiores da orla' },
-    { ref: null,         Icon: ClockIcon,  big: '11h30',             unit: '– 00h30',      sub: 'Todos os dias da semana' },
-    { ref: null,         Icon: MapPinIcon, big: 'Av. Atlântica',     unit: '2554',         sub: 'Balneário Camboriú — SC' },
+    { ref: years.ref,    Icon: StarIcon,   big: `${years.count}`,   unit: t.cred.yearsUnit,   sub: t.cred.yearsSub },
+    { ref: reviews.ref,  Icon: TrophyIcon, big: `+${reviews.count.toLocaleString('pt-BR')}`, unit: t.cred.reviewsUnit, sub: t.cred.reviewsSub },
+    { ref: capacity.ref, Icon: UsersIcon,  big: `+${capacity.count}`, unit: t.cred.seatsUnit, sub: t.cred.seatsSub },
+    { ref: null,         Icon: ClockIcon,  big: '11h30',             unit: t.cred.hoursRange, sub: t.cred.hoursSub },
+    { ref: null,         Icon: MapPinIcon, big: t.cred.addressStreet, unit: t.cred.addressNumber, sub: t.cred.addressCity },
   ]
 
   return (
