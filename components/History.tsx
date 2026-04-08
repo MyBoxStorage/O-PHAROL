@@ -34,9 +34,10 @@ export default function History() {
         </motion.div>
 
         {/* Timeline */}
-        <div style={{ position: 'relative', paddingLeft: 52 }}>
+        <div className="history-timeline" style={{ position: 'relative', paddingLeft: 52 }}>
           {/* Vertical line */}
           <div
+            className="history-line"
             style={{
               position: 'absolute',
               left: 18, top: 8, bottom: 8, width: 1,
@@ -57,6 +58,7 @@ export default function History() {
               <div style={{ position: 'relative', marginBottom: 28 }}>
                 {/* Diamond dot */}
                 <div
+                  className="history-decade-diamond"
                   style={{
                     position: 'absolute', left: -39, top: 8,
                     width: 16, height: 16, transform: 'rotate(45deg)',
@@ -82,6 +84,7 @@ export default function History() {
               {/* Items */}
               {decade.items.map((item, index) => (
                 <motion.div
+                  className="history-item-content"
                   key={`${decade.decade}-${item.year}`}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -91,6 +94,7 @@ export default function History() {
                 >
                   {/* Dot */}
                   <div
+                    className="history-item-dot"
                     style={{
                       position: 'absolute',
                       left: -45,

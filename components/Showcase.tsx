@@ -85,13 +85,13 @@ export default function Showcase() {
         {items.map((item, index) => (
           <motion.article
             key={item.id}
-            className="showcase-card"
+            className="showcase-card showcase-card-inner"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: index * 0.07 }}
             style={{
-              flex: '0 0 clamp(260px, 28vw, 340px)',
+              flex: '0 0 clamp(220px, 65vw, 340px)',
               position: 'relative',
               overflow: 'hidden',
               scrollSnapAlign: 'start',

@@ -55,7 +55,7 @@ export default function Navbar({ onReserve, onQueue, onClientArea }: NavbarProps
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 52px',
+          padding: '0 clamp(20px, 4vw, 52px)',
           background: scrolled ? 'rgba(255,255,255,0.97)' : 'transparent',
           backdropFilter: scrolled ? 'blur(28px) saturate(160%)' : 'none',
           borderBottom: scrolled ? '1px solid rgba(27,43,107,0.08)' : '1px solid transparent',

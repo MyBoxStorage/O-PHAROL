@@ -7,12 +7,12 @@ import { menuTabs, type MenuTab } from '@/lib/menuData'
 /* ─── Banner de destaque (sábado, domingo, rodízio) ─── */
 function MenuBanner({ title, info, price, bgColor }: { title: string; info: string; price: string; bgColor?: string }) {
   return (
-    <div style={{ background: bgColor || 'var(--navy)', color: 'var(--white)', padding: '18px 24px', marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-      <div>
-        <div style={{ fontFamily: 'var(--font-great-vibes), cursive', color: 'var(--gold)', fontSize: '1.9rem' }}>{title}</div>
+    <div style={{ background: bgColor || 'var(--navy)', color: 'var(--white)', padding: '18px 20px', marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 12, flexWrap: 'wrap' }}>
+      <div style={{ flex: '1 1 180px', minWidth: 0 }}>
+        <div style={{ fontFamily: 'var(--font-great-vibes), cursive', color: 'var(--gold)', fontSize: 'clamp(1.5rem, 5vw, 1.9rem)', lineHeight: 1.2 }}>{title}</div>
         <div style={{ fontSize: '0.68rem', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.7)', marginTop: 3 }}>{info}</div>
       </div>
-      <div style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--gold)', fontSize: '1.2rem', whiteSpace: 'nowrap' }}>{price}</div>
+      <div style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--gold)', fontSize: 'clamp(0.9rem, 3vw, 1.2rem)', flexShrink: 0, textAlign: 'right' }}>{price}</div>
     </div>
   )
 }

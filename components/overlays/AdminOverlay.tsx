@@ -162,8 +162,8 @@ export default function AdminOverlay({ open, onClose }: AdminOverlayProps) {
             </div>
           ) : (
             /* ── Admin panel ── */
-            <div style={{ display: 'flex', height: 'calc(100dvh - 69px)' }}>
-              <aside style={{ width: 240, background: 'var(--navy-deep)', color: 'white', overflowY: 'auto', flexShrink: 0 }}>
+            <div className="admin-layout" style={{ display: 'flex', height: 'calc(100dvh - 69px)' }}>
+              <aside className="admin-sidebar" style={{ width: 240, background: 'var(--navy-deep)', color: 'white', overflowY: 'auto', flexShrink: 0 }}>
                 <div style={{ padding: '16px 24px 22px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                   <div style={{ fontFamily: 'var(--font-playfair), serif' }}>O Pharol</div>
                   <div style={{ fontSize: '0.6rem', color: 'var(--gold)' }}>Área Administrativa</div>
@@ -193,12 +193,12 @@ export default function AdminOverlay({ open, onClose }: AdminOverlayProps) {
                 </div>
               </aside>
 
-              <main style={{ flex: 1, overflowY: 'auto', padding: 24 }}>
+              <main className="admin-main" style={{ flex: 1, overflowY: 'auto', padding: 24 }}>
                 {panel === 'dashboard' && (
                   <div>
                     <h2 style={{ margin: 0, fontFamily: 'var(--font-playfair), serif', color: 'var(--navy)' }}>Dashboard</h2>
                     <p style={{ color: 'var(--text-mid)' }}>Visão geral de hoje — {todayLabel()}</p>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
+                    <div className="admin-kpis" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
                       {[
                         ['Reservas Hoje', '24', '↑ +6 vs ontem'],
                         ['Na Fila Agora', '7', '↑ Alta temporada'],
@@ -289,7 +289,7 @@ export default function AdminOverlay({ open, onClose }: AdminOverlayProps) {
 
 function AdminTable({ title, headers, rows }: { title?: string; headers: string[]; rows: string[][] }) {
   return (
-    <div style={{ marginTop: 18, background: 'white', border: '1px solid var(--cream-dark)' }}>
+      <div className="admin-table-wrap" style={{ marginTop: 18, background: 'white', border: '1px solid var(--cream-dark)' }}>
       {title && (
         <h3 style={{ margin: 0, padding: 14, borderBottom: '1px solid var(--cream-dark)', fontFamily: 'var(--font-playfair), serif', color: 'var(--navy)' }}>
           {title}

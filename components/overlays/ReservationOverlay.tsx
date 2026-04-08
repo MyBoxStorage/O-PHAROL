@@ -113,7 +113,7 @@ export default function ReservationOverlay({ open, onClose, onClientArea }: Rese
           <div className="container" style={{ maxWidth: 960, paddingBlock: 28 }}>
             {/* ── Step indicator ── */}
             {!confirmed && (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', marginBottom: 24, gap: 8 }}>
+              <div className="reservation-step-indicator" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', marginBottom: 24, gap: 8 }}>
                 {[1,2,3,4].map(n => {
                   const done = step > n; const active = step === n
                   return (
@@ -191,7 +191,7 @@ export default function ReservationOverlay({ open, onClose, onClientArea }: Rese
                   <>
                     <div style={{ marginBottom: 20 }}>
                       <div style={{ marginBottom: 12, color: 'var(--gold)', fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontFamily: 'var(--font-montserrat), sans-serif' }}>Selecione a data</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 8 }}>
+                      <div className="reservation-dates-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 8 }}>
                         {dates.map(d => (
                           <button key={d.idx} onClick={() => setSelectedDate(d.idx)} style={{ border: '1px solid var(--cream-dark)', background: selectedDate===d.idx?'var(--navy)':'white', color: selectedDate===d.idx?'white':'var(--text-dark)', padding: 10, cursor: 'pointer' }}>
                             <div style={{ fontSize: '0.64rem' }}>{d.day}</div>
@@ -202,7 +202,7 @@ export default function ReservationOverlay({ open, onClose, onClientArea }: Rese
                     </div>
                     <div style={{ marginBottom: 20 }}>
                       <div style={{ marginBottom: 12, color: 'var(--gold)', fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontFamily: 'var(--font-montserrat), sans-serif' }}>Selecione o horário</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
+                      <div className="reservation-times-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
                         {times.map(time => {
                           const unavailable = ['14h30','15h00','22h30'].includes(time)
                           return <button key={time} disabled={unavailable} onClick={() => setSelectedTime(time)} style={{ border: '1px solid var(--cream-dark)', padding: 10, background: selectedTime===time?'var(--navy)':'white', color: selectedTime===time?'white':'var(--text-dark)', opacity: unavailable?0.3:1, textDecoration: unavailable?'line-through':'none', cursor: unavailable?'not-allowed':'pointer' }}>{time}</button>
@@ -211,7 +211,7 @@ export default function ReservationOverlay({ open, onClose, onClientArea }: Rese
                     </div>
                     <div style={{ marginBottom: 20 }}>
                       <div style={{ marginBottom: 12, color: 'var(--gold)', fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontFamily: 'var(--font-montserrat), sans-serif' }}>Número de pessoas</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
+                      <div className="reservation-people-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
                         {['1','2','3','4','5','6','7','8+'].map(p => <button key={p} onClick={() => setSelectedPeople(p)} style={{ border: '1px solid var(--cream-dark)', padding: 10, background: selectedPeople===p?'var(--navy)':'white', color: selectedPeople===p?'white':'var(--text-dark)', cursor: 'pointer' }}>{p}</button>)}
                       </div>
                     </div>
@@ -222,13 +222,13 @@ export default function ReservationOverlay({ open, onClose, onClientArea }: Rese
                   <>
                     <div style={{ marginBottom: 24 }}>
                       <div style={{ marginBottom: 14, color: 'var(--gold)', fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontFamily: 'var(--font-montserrat), sans-serif' }}>Preferência de assento</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                      <div className="reservation-prefs-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                         {prefOptions.map(item => <ToggleCard key={item[0]} title={item[0]} subtitle={item[1]} onToggle={on => setSelectedPrefs(prev => on?[...prev,item[0]]:prev.filter(v=>v!==item[0]))} />)}
                       </div>
                     </div>
                     <div>
                       <div style={{ marginBottom: 14, color: 'var(--gold)', fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.14em', fontFamily: 'var(--font-montserrat), sans-serif' }}>Restrições alimentares</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                      <div className="reservation-prefs-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                         {restrictions.map(item => <ToggleCard key={item} title={item} onToggle={on => setSelectedRestrictions(prev => on?[...prev,item]:prev.filter(v=>v!==item))} />)}
                       </div>
                     </div>
@@ -274,7 +274,7 @@ export default function ReservationOverlay({ open, onClose, onClientArea }: Rese
                 )}
 
                 {!confirmed && step === 4 && (
-                  <div style={{ maxWidth: 480, margin: '0 auto' }}>
+                  <div className="reservation-step4-form" style={{ maxWidth: 480, margin: '0 auto' }}>
                     <motion.svg width="72" height="72" viewBox="0 0 120 120" initial="hidden" animate="visible" style={{ display: 'block', margin: '0 auto 20px' }}>
                       <motion.circle cx="60" cy="60" r="52" stroke="var(--gold)" strokeWidth="3" fill="none" variants={{ hidden:{pathLength:0}, visible:{pathLength:1,transition:{duration:0.7}} }} />
                       <motion.path d="M35 63 L52 80 L86 45" stroke="var(--gold)" strokeWidth="4" fill="none" variants={{ hidden:{pathLength:0}, visible:{pathLength:1,transition:{duration:0.6,delay:0.3}} }} />
@@ -317,9 +317,9 @@ export default function ReservationOverlay({ open, onClose, onClientArea }: Rese
           </div>
 
           {!confirmed && step < 4 && (
-            <div style={{ position: 'sticky', bottom: 0, background: 'var(--cream)', borderTop: '1px solid var(--cream-dark)', padding: 16, display: 'flex', justifyContent: 'space-between', zIndex: 2 }}>
-              <button onClick={() => setStep(p=>Math.max(1,p-1))} style={{ border: '1px solid var(--cream-dark)', background: 'white', padding: '10px 16px', cursor: 'pointer' }}>Voltar</button>
-              <button onClick={() => setStep(p=>Math.min(4,p+1))} style={{ border: 'none', background: 'var(--navy)', color: 'white', padding: '10px 16px', cursor: 'pointer' }}>Próximo</button>
+            <div style={{ position: 'sticky', bottom: 0, background: 'var(--cream)', borderTop: '1px solid var(--cream-dark)', padding: 16, display: 'flex', justifyContent: 'space-between', gap: 12, zIndex: 2 }}>
+              <button onClick={() => setStep(p=>Math.max(1,p-1))} style={{ border: '1px solid var(--cream-dark)', background: 'white', padding: '12px 20px', cursor: 'pointer', minHeight: 44, minWidth: 80 }}>Voltar</button>
+              <button onClick={() => setStep(p=>Math.min(4,p+1))} style={{ border: 'none', background: 'var(--navy)', color: 'white', padding: '12px 20px', cursor: 'pointer', minHeight: 44, flex: 1 }}>Próximo</button>
             </div>
           )}
         </motion.div>

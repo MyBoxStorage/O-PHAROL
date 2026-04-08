@@ -89,7 +89,7 @@ function NewReserveForm({ userId, onCreated, onBack }: { userId: string; onCreat
         </div>
         <div style={{ display:'grid', gap:16 }}>
           <div><label style={LBL}>Data *</label><input type="date" value={data} onChange={e=>{setData(e.target.value);setErro('')}} style={INP} /></div>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+          <div className="client-new-reserve-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
             <div><label style={LBL}>Horário</label><select value={horario} onChange={e=>setHorario(e.target.value)} style={INP}>{['11h30','12h00','13h00','19h00','19h30','20h00','20h30','21h00','21h30','22h00'].map(t=><option key={t}>{t}</option>)}</select></div>
             <div><label style={LBL}>Pessoas</label><select value={pessoas} onChange={e=>setPessoas(e.target.value)} style={INP}>{['1 pessoa','2 pessoas','3 pessoas','4 pessoas','5 pessoas','6+ pessoas'].map(t=><option key={t}>{t}</option>)}</select></div>
           </div>
@@ -482,7 +482,7 @@ export default function ClientOverlay({ open, onClose, prefill }: ClientOverlayP
               /* ── DASHBOARD ── */
               <div>
                 {/* Header premium */}
-                <div style={{ background:'var(--navy)', padding:'24px 28px', marginBottom:0, display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
+                <div className="client-dashboard-header" style={{ background:'var(--navy)', padding:'24px 28px', marginBottom:0, display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
                   <div>
                     <div style={{ fontFamily:'var(--font-playfair), serif', fontSize:'1.6rem', color:'white', marginBottom:2 }}>Olá, {displayName}</div>
                     <div style={{ fontSize:'0.62rem', color:'rgba(255,255,255,0.45)', letterSpacing:'0.12em', fontFamily:'var(--font-montserrat), sans-serif' }}>{user.email}</div>
@@ -497,7 +497,7 @@ export default function ClientOverlay({ open, onClose, prefill }: ClientOverlayP
                 <div style={{ height:2, background:'linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark))', marginBottom:0 }} />
 
                 {/* Tabs */}
-                <div style={{ background:'white', borderBottom:'1px solid var(--cream-dark)', marginBottom:24, display:'flex', overflowX:'auto' }}>
+                <div className="client-tabs-bar" style={{ background:'white', borderBottom:'1px solid var(--cream-dark)', marginBottom:24, display:'flex', overflowX:'auto' }}>
                   {[{id:'reservas',label:'Reservas'},{id:'fila',label:'Fila Virtual'},{id:'avaliacoes',label:'Avaliações'},{id:'historico',label:'Histórico'},{id:'fidelidade',label:'Fidelidade'}].map(t => (
                     <button key={t.id} onClick={()=>{setTab(t.id);setShowNewReserve(false)}} style={{ border:'none', background:'transparent', padding:'14px 20px', color:tab===t.id?'var(--navy)':'var(--text-light)', fontWeight:tab===t.id?600:400, cursor:'pointer', whiteSpace:'nowrap', borderBottom:tab===t.id?'2px solid var(--gold)':'2px solid transparent', marginBottom:-1, transition:'all 0.2s', fontFamily:'var(--font-montserrat), sans-serif', fontSize:'0.68rem', letterSpacing:'0.1em', textTransform:'uppercase' }}>{t.label}</button>
                   ))}

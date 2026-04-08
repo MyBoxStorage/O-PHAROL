@@ -90,6 +90,7 @@ export default function About() {
 
           {/* Badge 38 */}
           <motion.div
+            className="about-badge-38"
             initial={{ opacity: 0, scale: 0.6, y: 10 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
@@ -101,7 +102,7 @@ export default function About() {
               boxShadow: '0 20px 56px rgba(13,24,56,0.5), inset 0 0 0 1px rgba(201,168,76,0.2)',
             }}
           >
-            <div style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--gold)', fontWeight: 900, fontSize: '2.8rem', lineHeight: 1 }}>38</div>
+            <div className="badge-number" style={{ fontFamily: 'var(--font-playfair), serif', color: 'var(--gold)', fontWeight: 900, fontSize: '2.8rem', lineHeight: 1 }}>38</div>
             <div style={{ fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginTop: 3 }}>Anos</div>
           </motion.div>
         </motion.div>
@@ -145,7 +146,7 @@ export default function About() {
           </motion.p>
 
           {/* Features */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 36 }}>
+          <div className="about-features-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 36 }}>
             {features.map(({ Icon, label, desc }, i) => (
               <motion.div key={label}
                 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 + i * 0.07 }}

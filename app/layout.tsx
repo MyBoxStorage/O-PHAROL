@@ -104,18 +104,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
         />
-        {/* BC Connect Widget — captura de leads opt-in */}
-        <script
-          src="https://bc-connect-api-v2.fly.dev/widget.js"
-          data-key="bcc_dbc12a78-6a51-4acd-a968-22f4b334d24a"
-          data-primary="#8B1A1A"
-          data-bg="#0f0a06"
-          data-text="#f5f0e8"
-          data-radius="4"
-          data-font="Cormorant Garamond, Georgia, serif"
-          data-auto="true"
-          async
-        />
       </head>
       <body>{children}</body>
     </html>
