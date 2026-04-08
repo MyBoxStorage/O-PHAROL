@@ -67,7 +67,7 @@ export default function About() {
           {/* Video container */}
           <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden', zIndex: 1, boxShadow: '-8px 16px 64px rgba(13,24,56,0.2)' }}>
             <video autoPlay muted loop playsInline
-              src="https://res.cloudinary.com/djhevgyvi/video/upload/v1773003521/almoco-orla_lehs7l.mp4"
+              src="https://res.cloudinary.com/dezrsl9af/video/upload/q_auto/f_auto/v1775674903/snapinsta.com.br-69d6a595af73a_bzcttg.mp4"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(13,24,56,0.28) 0%, transparent 55%)', pointerEvents: 'none' }} />

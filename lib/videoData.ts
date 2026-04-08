@@ -7,7 +7,7 @@ export const videos = [
   },
   {
     id: 'almoco',
-    url: 'https://res.cloudinary.com/djhevgyvi/video/upload/v1773003521/almoco-orla_lehs7l.mp4',
+    url: 'https://res.cloudinary.com/dezrsl9af/video/upload/q_auto/f_auto/v1775674903/snapinsta.com.br-69d6a60c299d5_jucsxu.mp4',
     label: 'Almoço na Varanda',
     sublabel: 'Vista para a Orla',
   },
